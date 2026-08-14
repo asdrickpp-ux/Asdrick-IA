@@ -5,11 +5,6 @@ const app = express();
 
 const PORT = process.env.PORT || 3000;
 
-
-/* =====================================================
-   OPENAI
-===================================================== */
-
 const apiKey = process.env.OPENAI_API_KEY;
 
 const client = apiKey
@@ -45,7 +40,6 @@ app.use((req, res, next) => {
     }
 
     next();
-
 });
 
 
@@ -61,7 +55,7 @@ app.use(
 
 
 /* =====================================================
-   TEST
+   TEST DU SERVEUR
 ===================================================== */
 
 app.get("/", (req, res) => {
@@ -70,7 +64,9 @@ app.get("/", (req, res) => {
         status: "online",
         assistant: "Asdrick AI",
         version: "2.0",
-        ai: client ? "connected" : "missing_api_key"
+        ai: client
+            ? "connected"
+            : "missing_api_key"
     });
 
 });
@@ -88,7 +84,8 @@ app.post("/api/chat", async (req, res) => {
 
             return res.status(500).json({
                 success: false,
-                error: "OPENAI_API_KEY est absente."
+                error:
+                    "OPENAI_API_KEY est absente de Render."
             });
 
         }
@@ -98,12 +95,6 @@ app.post("/api/chat", async (req, res) => {
             typeof req.body?.message === "string"
                 ? req.body.message.trim()
                 : "";
-
-
-        const history =
-            Array.isArray(req.body?.history)
-                ? req.body.history
-                : [];
 
 
         if (!message) {
@@ -117,45 +108,60 @@ app.post("/api/chat", async (req, res) => {
 
 
         /*
-         * On limite l'historique pour éviter
-         * d'envoyer une conversation gigantesque
-         * à chaque requête.
+         * Historique envoyé par l'iPhone
          */
 
-        const safeHistory =
-            history
-                .filter(item =>
-                    item &&
-                    (
-                        item.role === "user" ||
-                        item.role === "assistant"
-                    ) &&
-                    typeof item.content === "string"
-                )
+        const receivedHistory =
+            Array.isArray(req.body?.history)
+                ? req.body.history
+                : [];
+
+
+        /*
+         * Nettoyage et limitation
+         * de l'historique.
+         */
+
+        const history =
+            receivedHistory
+                .filter(item => {
+
+                    return (
+                        item &&
+                        (
+                            item.role === "user" ||
+                            item.role === "assistant"
+                        ) &&
+                        typeof item.content === "string" &&
+                        item.content.trim().length > 0
+                    );
+
+                })
                 .slice(-20);
 
 
         /*
-         * Construction du contexte
+         * Construction de la conversation.
          */
 
         const conversation = [
-
-            ...safeHistory,
-
+            ...history,
             {
                 role: "user",
                 content: message
             }
-
         ];
 
 
         console.log(
-            "📩 Message :",
+            "📩 Message reçu :",
             message
         );
 
+
+        /*
+         * Appel au modèle IA
+         */
 
         const response =
             await client.responses.create({
@@ -165,29 +171,41 @@ app.post("/api/chat", async (req, res) => {
                 instructions: `
 Tu es Asdrick AI, l'assistant personnel d'Asdrick.
 
-Tu réponds en français par défaut.
+LANGUE :
+Réponds en français par défaut.
+Si l'utilisateur parle une autre langue,
+réponds dans cette langue.
 
 PERSONNALITÉ :
 - naturel
 - intelligent
 - direct
 - chaleureux
-- parfois drôle
-- jamais inutilement compliqué
-- tu peux utiliser quelques emojis quand ils sont naturels
+- détendu
+- parfois humoristique
+- jamais inutilement long
+- explique clairement les choses complexes
 
 COMPORTEMENT :
-- comprends le contexte de la conversation
-- ne répète pas inutilement les informations déjà données
-- réponds précisément à la question
-- si tu ne sais pas quelque chose, dis-le clairement
-- ne prétends jamais avoir effectué une action que tu n'as pas réellement effectuée
-- ne prétends pas contrôler l'iPhone si aucune fonction de contrôle n'est réellement disponible
-- respecte les demandes de l'utilisateur
+- utilise le contexte de la conversation
+- ne demande pas à l'utilisateur de répéter
+  quelque chose déjà présent dans l'historique
+- répond directement aux questions
+- reconnais clairement tes limites
+- ne mens jamais sur tes capacités
+- ne prétends jamais avoir contrôlé l'iPhone
+  si aucune fonction de contrôle n'est disponible
+- ne prétends jamais avoir effectué une action
+  que tu n'as pas réellement effectuée
 
-IMPORTANT :
-La conversation précédente fournie dans "input" fait partie du contexte.
-Utilise-la pour comprendre les messages suivants.
+CONTEXTE :
+Les messages précédents fournis dans "input"
+font partie de la conversation actuelle.
+Utilise-les pour comprendre les messages
+suivants.
+
+Tu es l'intelligence conversationnelle
+derrière l'application appelée "Asdrick AI".
 `,
 
                 input: conversation
@@ -196,12 +214,14 @@ Utilise-la pour comprendre les messages suivants.
 
 
         const reply =
-            response.output_text ||
-            "Je n'ai pas réussi à générer une réponse.";
+            typeof response.output_text === "string" &&
+            response.output_text.trim().length > 0
+                ? response.output_text.trim()
+                : "Je n'ai pas réussi à générer une réponse.";
 
 
         console.log(
-            "🤖 Réponse générée"
+            "🤖 Réponse générée."
         );
 
 
@@ -217,7 +237,7 @@ Utilise-la pour comprendre les messages suivants.
     } catch (error) {
 
         console.error(
-            "❌ Erreur OpenAI :",
+            "❌ ERREUR OPENAI :",
             error
         );
 
@@ -227,7 +247,7 @@ Utilise-la pour comprendre les messages suivants.
             success: false,
 
             error:
-                "Erreur lors de la communication avec l'IA."
+                "Une erreur est survenue avec le modèle IA."
 
         });
 
@@ -237,7 +257,7 @@ Utilise-la pour comprendre les messages suivants.
 
 
 /* =====================================================
-   START
+   DÉMARRAGE
 ===================================================== */
 
 app.listen(
