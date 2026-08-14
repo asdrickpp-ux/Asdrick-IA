@@ -1,7 +1,7 @@
 {
   "name": "asdrick-ai",
-  "version": "3.1.0",
-  "description": "Asdrick AI",
+  "version": "5.0.0",
+  "description": "Asdrick AI - assistant vocal personnel",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
