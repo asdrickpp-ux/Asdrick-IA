@@ -12,10 +12,6 @@ const PORT = process.env.PORT || 3000;
 
 const apiKey = process.env.OPENAI_API_KEY;
 
-if (!apiKey) {
-    console.error("❌ OPENAI_API_KEY est absente.");
-}
-
 const client = apiKey
     ? new OpenAI({
         apiKey: apiKey
@@ -59,13 +55,13 @@ app.use((req, res, next) => {
 
 app.use(
     express.json({
-        limit: "1mb"
+        limit: "2mb"
     })
 );
 
 
 /* =====================================================
-   PAGE TEST
+   TEST
 ===================================================== */
 
 app.get("/", (req, res) => {
@@ -73,7 +69,7 @@ app.get("/", (req, res) => {
     res.json({
         status: "online",
         assistant: "Asdrick AI",
-        version: "1.0",
+        version: "2.0",
         ai: client ? "connected" : "missing_api_key"
     });
 
@@ -81,7 +77,7 @@ app.get("/", (req, res) => {
 
 
 /* =====================================================
-   CHAT IA
+   CHAT
 ===================================================== */
 
 app.post("/api/chat", async (req, res) => {
@@ -92,7 +88,7 @@ app.post("/api/chat", async (req, res) => {
 
             return res.status(500).json({
                 success: false,
-                error: "La clé API OpenAI n'est pas configurée sur Render."
+                error: "OPENAI_API_KEY est absente."
             });
 
         }
@@ -102,6 +98,12 @@ app.post("/api/chat", async (req, res) => {
             typeof req.body?.message === "string"
                 ? req.body.message.trim()
                 : "";
+
+
+        const history =
+            Array.isArray(req.body?.history)
+                ? req.body.history
+                : [];
 
 
         if (!message) {
@@ -114,8 +116,43 @@ app.post("/api/chat", async (req, res) => {
         }
 
 
+        /*
+         * On limite l'historique pour éviter
+         * d'envoyer une conversation gigantesque
+         * à chaque requête.
+         */
+
+        const safeHistory =
+            history
+                .filter(item =>
+                    item &&
+                    (
+                        item.role === "user" ||
+                        item.role === "assistant"
+                    ) &&
+                    typeof item.content === "string"
+                )
+                .slice(-20);
+
+
+        /*
+         * Construction du contexte
+         */
+
+        const conversation = [
+
+            ...safeHistory,
+
+            {
+                role: "user",
+                content: message
+            }
+
+        ];
+
+
         console.log(
-            "📩 Message reçu :",
+            "📩 Message :",
             message
         );
 
@@ -130,21 +167,30 @@ Tu es Asdrick AI, l'assistant personnel d'Asdrick.
 
 Tu réponds en français par défaut.
 
-Ton style :
+PERSONNALITÉ :
 - naturel
 - intelligent
 - direct
 - chaleureux
-- parfois humoristique
-- pas de réponses inutilement longues
-- tu expliques clairement les choses compliquées
-- tu ne prétends jamais avoir accès à l'iPhone si tu ne l'as pas réellement
-- tu ne prétends jamais avoir effectué une action que tu n'as pas effectuée
+- parfois drôle
+- jamais inutilement compliqué
+- tu peux utiliser quelques emojis quand ils sont naturels
 
-Tu dois répondre directement à la demande de l'utilisateur.
+COMPORTEMENT :
+- comprends le contexte de la conversation
+- ne répète pas inutilement les informations déjà données
+- réponds précisément à la question
+- si tu ne sais pas quelque chose, dis-le clairement
+- ne prétends jamais avoir effectué une action que tu n'as pas réellement effectuée
+- ne prétends pas contrôler l'iPhone si aucune fonction de contrôle n'est réellement disponible
+- respecte les demandes de l'utilisateur
+
+IMPORTANT :
+La conversation précédente fournie dans "input" fait partie du contexte.
+Utilise-la pour comprendre les messages suivants.
 `,
 
-                input: message
+                input: conversation
 
             });
 
@@ -155,7 +201,7 @@ Tu dois répondre directement à la demande de l'utilisateur.
 
 
         console.log(
-            "🤖 Réponse générée."
+            "🤖 Réponse générée"
         );
 
 
@@ -171,7 +217,7 @@ Tu dois répondre directement à la demande de l'utilisateur.
     } catch (error) {
 
         console.error(
-            "❌ Erreur IA :",
+            "❌ Erreur OpenAI :",
             error
         );
 
@@ -181,7 +227,7 @@ Tu dois répondre directement à la demande de l'utilisateur.
             success: false,
 
             error:
-                "Une erreur est survenue lors de la communication avec l'IA."
+                "Erreur lors de la communication avec l'IA."
 
         });
 
@@ -191,7 +237,7 @@ Tu dois répondre directement à la demande de l'utilisateur.
 
 
 /* =====================================================
-   SERVEUR
+   START
 ===================================================== */
 
 app.listen(
@@ -200,7 +246,7 @@ app.listen(
     () => {
 
         console.log(
-            `🚀 Asdrick AI lancé sur le port ${PORT}`
+            `🚀 Asdrick AI V2 lancé sur le port ${PORT}`
         );
 
     }
