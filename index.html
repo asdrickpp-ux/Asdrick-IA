@@ -2,7 +2,6 @@
 <html lang="fr">
 
 <head>
-
 <meta charset="UTF-8">
 
 <meta
@@ -10,14 +9,15 @@
     content="width=device-width, initial-scale=1.0, viewport-fit=cover"
 >
 
-<meta
-    name="theme-color"
-    content="#08080c"
->
+<meta name="theme-color" content="#05060a">
 
 <title>Asdrick AI</title>
 
 <style>
+
+/* =====================================================
+   RESET
+===================================================== */
 
 * {
     box-sizing: border-box;
@@ -25,30 +25,16 @@
     padding: 0;
 }
 
-:root {
-    --bg: #08080c;
-    --panel: #121218;
-    --panel2: #1a1a22;
-    --text: #ffffff;
-    --muted: #92929d;
-    --border: rgba(255,255,255,0.08);
-    --accent: #7657ff;
-    --green: #55df91;
-    --red: #ff5757;
-}
-
 html,
 body {
-
     width: 100%;
     height: 100%;
-
     overflow: hidden;
+}
 
-    background: var(--bg);
-
-    color: var(--text);
-
+body {
+    background: #05060a;
+    color: #fff;
     font-family:
         -apple-system,
         BlinkMacSystemFont,
@@ -57,15 +43,36 @@ body {
         sans-serif;
 }
 
-button,
-textarea {
-    font: inherit;
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+:root {
+
+    --purple: #7657ff;
+    --purple-light: #a88cff;
+
+    --blue: #4f8cff;
+
+    --cyan: #43d9ff;
+
+    --green: #55e6a5;
+
+    --red: #ff5364;
+
+    --panel:
+        rgba(16,17,26,0.78);
+
+    --border:
+        rgba(255,255,255,0.09);
+
 }
 
-button {
-    border: 0;
-    -webkit-tap-highlight-color: transparent;
-}
+
+/* =====================================================
+   APP
+===================================================== */
 
 .app {
 
@@ -76,12 +83,21 @@ button {
     flex-direction: column;
 
     background:
+
         radial-gradient(
-            circle at 50% -20%,
-            rgba(118,87,255,0.2),
-            transparent 45%
+            circle at 50% 5%,
+            rgba(118,87,255,0.18),
+            transparent 35%
         ),
-        var(--bg);
+
+        radial-gradient(
+            circle at 50% 45%,
+            rgba(67,217,255,0.06),
+            transparent 40%
+        ),
+
+        #05060a;
+
 }
 
 
@@ -89,88 +105,104 @@ button {
    HEADER
 ===================================================== */
 
-.topbar {
+.header {
 
-    min-height: 72px;
+    height: 72px;
 
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
 
     padding:
-        calc(env(safe-area-inset-top) + 10px)
-        15px
-        10px;
+        calc(env(safe-area-inset-top) + 8px)
+        16px
+        8px;
 
     border-bottom:
         1px solid var(--border);
 
     background:
-        rgba(8,8,12,0.9);
+        rgba(5,6,10,0.78);
 
     backdrop-filter:
         blur(20px);
+
+    z-index: 20;
+
 }
+
 
 .brand {
 
     display: flex;
-
     align-items: center;
+    gap: 10px;
 
-    gap: 11px;
 }
 
-.logo {
 
-    width: 43px;
-    height: 43px;
+.brand-icon {
+
+    width: 42px;
+    height: 42px;
 
     display: flex;
-
     align-items: center;
     justify-content: center;
 
-    border-radius: 14px;
+    border-radius: 13px;
 
     background:
         linear-gradient(
             135deg,
-            #7657ff,
-            #b08cff
+            var(--purple),
+            var(--purple-light)
         );
 
-    font-size: 23px;
-
     box-shadow:
-        0 0 30px
-        rgba(118,87,255,0.3);
+        0 0 25px
+        rgba(118,87,255,0.35);
+
+    font-size: 21px;
+
 }
 
-.brand h1 {
+
+.brand-name {
+
+    font-weight: 700;
     font-size: 17px;
+
 }
+
 
 .status {
-
-    display: block;
 
     margin-top: 2px;
 
     color: var(--green);
 
     font-size: 11px;
+
 }
 
+
 .status.thinking {
-    color: #b08cff;
+    color: var(--purple-light);
+}
+
+.status.listening {
+    color: var(--cyan);
+}
+
+.status.speaking {
+    color: var(--green);
 }
 
 .status.error {
     color: var(--red);
 }
+
 
 .clear {
 
@@ -179,12 +211,552 @@ button {
 
     border-radius: 12px;
 
-    background: var(--panel2);
-
-    color: white;
+    background:
+        rgba(255,255,255,0.06);
 
     border:
         1px solid var(--border);
+
+    color: white;
+
+    font-size: 17px;
+
+}
+
+
+/* =====================================================
+   CORE AREA
+===================================================== */
+
+.core-area {
+
+    position: relative;
+
+    height: 43%;
+
+    min-height: 300px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    overflow: hidden;
+
+}
+
+
+/* =====================================================
+   HUD GRID
+===================================================== */
+
+.grid {
+
+    position: absolute;
+
+    width: 430px;
+    height: 430px;
+
+    opacity: 0.16;
+
+    background:
+
+        linear-gradient(
+            rgba(118,87,255,0.15) 1px,
+            transparent 1px
+        ),
+
+        linear-gradient(
+            90deg,
+            rgba(118,87,255,0.15) 1px,
+            transparent 1px
+        );
+
+    background-size:
+        28px 28px;
+
+    mask-image:
+        radial-gradient(
+            circle,
+            black 15%,
+            transparent 70%
+        );
+
+    animation:
+        gridMove 12s linear infinite;
+
+}
+
+
+@keyframes gridMove {
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+
+/* =====================================================
+   CORE
+===================================================== */
+
+.core {
+
+    position: relative;
+
+    width: 210px;
+    height: 210px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+}
+
+
+/* =====================================================
+   OUTER RINGS
+===================================================== */
+
+.ring {
+
+    position: absolute;
+
+    border-radius: 50%;
+
+    border:
+        1px solid
+        rgba(118,87,255,0.35);
+
+}
+
+
+.ring.one {
+
+    width: 205px;
+    height: 205px;
+
+    animation:
+        rotate 16s linear infinite;
+
+}
+
+
+.ring.two {
+
+    width: 178px;
+    height: 178px;
+
+    border-style: dashed;
+
+    border-color:
+        rgba(67,217,255,0.35);
+
+    animation:
+        rotateReverse 11s linear infinite;
+
+}
+
+
+.ring.three {
+
+    width: 150px;
+    height: 150px;
+
+    border-color:
+        rgba(168,140,255,0.42);
+
+    animation:
+        pulseRing 3s ease-in-out infinite;
+
+}
+
+
+@keyframes rotate {
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+
+@keyframes rotateReverse {
+
+    from {
+        transform: rotate(360deg);
+    }
+
+    to {
+        transform: rotate(0deg);
+    }
+
+}
+
+
+@keyframes pulseRing {
+
+    0%,
+    100% {
+        transform: scale(0.96);
+        opacity: 0.45;
+    }
+
+    50% {
+        transform: scale(1.05);
+        opacity: 0.9;
+    }
+
+}
+
+
+/* =====================================================
+   CORE GLOW
+===================================================== */
+
+.core-glow {
+
+    position: absolute;
+
+    width: 120px;
+    height: 120px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(168,140,255,0.9),
+            rgba(118,87,255,0.35) 40%,
+            transparent 72%
+        );
+
+    filter:
+        blur(8px);
+
+    animation:
+        coreBreath 3s ease-in-out infinite;
+
+}
+
+
+@keyframes coreBreath {
+
+    0%,
+    100% {
+        transform: scale(0.88);
+        opacity: 0.65;
+    }
+
+    50% {
+        transform: scale(1.12);
+        opacity: 1;
+    }
+
+}
+
+
+/* =====================================================
+   CORE BALL
+===================================================== */
+
+.core-ball {
+
+    position: relative;
+
+    width: 75px;
+    height: 75px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+
+        radial-gradient(
+            circle at 35% 30%,
+            #ffffff,
+            #b9a9ff 12%,
+            #7657ff 40%,
+            #241c55 70%,
+            #080811 100%
+        );
+
+    box-shadow:
+
+        0 0 20px
+        rgba(118,87,255,0.9),
+
+        0 0 55px
+        rgba(118,87,255,0.55),
+
+        inset 0 0 20px
+        rgba(255,255,255,0.3);
+
+    z-index: 5;
+
+}
+
+
+.core-ball::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 34px;
+    height: 34px;
+
+    border-radius: 50%;
+
+    border:
+        2px solid
+        rgba(255,255,255,0.7);
+
+    animation:
+        innerPulse 2s ease-in-out infinite;
+
+}
+
+
+@keyframes innerPulse {
+
+    0%,
+    100% {
+        transform: scale(0.75);
+        opacity: 0.4;
+    }
+
+    50% {
+        transform: scale(1.1);
+        opacity: 0.9;
+    }
+
+}
+
+
+.core-symbol {
+
+    position: relative;
+
+    z-index: 10;
+
+    font-size: 25px;
+
+    text-shadow:
+        0 0 12px white;
+
+}
+
+
+/* =====================================================
+   LISTENING MODE
+===================================================== */
+
+.core.listening
+.core-ball {
+
+    background:
+        radial-gradient(
+            circle at 35% 30%,
+            white,
+            #8eeaff 18%,
+            #43d9ff 45%,
+            #154e68 75%,
+            #050b11
+        );
+
+    box-shadow:
+
+        0 0 25px
+        rgba(67,217,255,0.9),
+
+        0 0 70px
+        rgba(67,217,255,0.55);
+
+}
+
+
+.core.listening .ring {
+
+    border-color:
+        rgba(67,217,255,0.7);
+
+}
+
+
+.core.listening .core-glow {
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(67,217,255,0.95),
+            rgba(67,217,255,0.35),
+            transparent 70%
+        );
+
+}
+
+
+/* =====================================================
+   SPEAKING MODE
+===================================================== */
+
+.core.speaking .core-ball {
+
+    animation:
+        speakingPulse 0.65s ease-in-out infinite;
+
+}
+
+
+.core.speaking .ring {
+
+    animation-duration:
+        3s;
+
+}
+
+
+@keyframes speakingPulse {
+
+    0%,
+    100% {
+        transform: scale(0.92);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+}
+
+
+/* =====================================================
+   THINKING MODE
+===================================================== */
+
+.core.thinking .ring.one {
+
+    animation-duration:
+        4s;
+
+}
+
+
+.core.thinking .core-glow {
+
+    animation-duration:
+        1.2s;
+
+}
+
+
+/* =====================================================
+   AUDIO BARS
+===================================================== */
+
+.audio-bars {
+
+    position: absolute;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 4px;
+
+    width: 250px;
+    height: 90px;
+
+}
+
+
+.audio-bar {
+
+    width: 3px;
+
+    height: 20px;
+
+    border-radius: 4px;
+
+    background:
+        linear-gradient(
+            to top,
+            var(--purple),
+            var(--cyan)
+        );
+
+    opacity: 0.7;
+
+    transform:
+        scaleY(0.35);
+
+}
+
+
+.core.listening .audio-bar,
+.core.speaking .audio-bar {
+
+    animation:
+        audioPulse
+        var(--delay)
+        ease-in-out
+        infinite alternate;
+
+}
+
+
+@keyframes audioPulse {
+
+    from {
+        transform: scaleY(0.25);
+    }
+
+    to {
+        transform: scaleY(var(--height));
+    }
+
+}
+
+
+/* =====================================================
+   CORE LABEL
+===================================================== */
+
+.core-label {
+
+    position: absolute;
+
+    bottom: 15px;
+
+    left: 0;
+    right: 0;
+
+    text-align: center;
+
+    font-size: 10px;
+
+    letter-spacing: 3px;
+
+    color:
+        rgba(255,255,255,0.5);
+
 }
 
 
@@ -199,11 +771,15 @@ button {
     overflow-y: auto;
 
     padding:
-        25px 14px 20px;
+        12px
+        14px
+        20px;
 
     -webkit-overflow-scrolling:
         touch;
+
 }
+
 
 .chat::-webkit-scrollbar {
     display: none;
@@ -218,77 +794,68 @@ button {
 
     text-align: center;
 
-    max-width: 520px;
+    padding:
+        5px 10px 20px;
 
-    margin:
-        8vh auto 0;
 }
 
-.big-logo {
-
-    width: 75px;
-    height: 75px;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    margin:
-        0 auto 20px;
-
-    border-radius: 24px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #7657ff,
-            #b08cff
-        );
-
-    font-size: 38px;
-
-    box-shadow:
-        0 0 40px
-        rgba(118,87,255,0.3);
-}
 
 .welcome h2 {
 
-    font-size: 27px;
+    font-size: 22px;
 
-    margin-bottom: 8px;
+    margin-bottom: 6px;
+
 }
+
 
 .welcome p {
 
-    color: var(--muted);
+    color:
+        rgba(255,255,255,0.5);
+
+    font-size: 14px;
+
 }
+
 
 .suggestions {
 
-    display: grid;
+    display: flex;
 
-    gap: 10px;
+    gap: 8px;
 
-    margin-top: 25px;
+    overflow-x: auto;
+
+    margin-top: 16px;
+
+    padding-bottom: 4px;
+
 }
+
+
+.suggestions::-webkit-scrollbar {
+    display: none;
+}
+
 
 .suggestion {
 
+    flex-shrink: 0;
+
     padding:
-        14px 16px;
+        10px 13px;
 
-    border-radius: 16px;
+    border-radius: 15px;
 
-    background: var(--panel);
-
-    color: white;
+    background:
+        rgba(255,255,255,0.055);
 
     border:
         1px solid var(--border);
 
-    text-align: left;
+    color: white;
+
 }
 
 
@@ -300,25 +867,29 @@ button {
 
     display: flex;
 
-    margin-bottom: 14px;
+    margin-bottom: 12px;
+
 }
+
 
 .message.user {
     justify-content: flex-end;
 }
 
+
 .message.ai {
     justify-content: flex-start;
 }
+
 
 .bubble {
 
     max-width: 84%;
 
     padding:
-        12px 15px;
+        11px 14px;
 
-    border-radius: 18px;
+    border-radius: 17px;
 
     line-height: 1.45;
 
@@ -327,23 +898,36 @@ button {
     white-space: pre-wrap;
 
     overflow-wrap: anywhere;
+
 }
+
 
 .user .bubble {
 
-    background: var(--accent);
+    background:
+        linear-gradient(
+            135deg,
+            var(--purple),
+            #6045dc
+        );
 
-    border-bottom-right-radius: 6px;
+    border-bottom-right-radius:
+        5px;
+
 }
+
 
 .ai .bubble {
 
-    background: var(--panel2);
+    background:
+        rgba(255,255,255,0.065);
 
     border:
         1px solid var(--border);
 
-    border-bottom-left-radius: 6px;
+    border-bottom-left-radius:
+        5px;
+
 }
 
 
@@ -355,15 +939,20 @@ button {
 
     display: none;
 
+    align-items: center;
+
     gap: 5px;
 
     padding:
-        0 20px 10px;
+        0 18px 7px;
+
 }
+
 
 .typing.active {
     display: flex;
 }
+
 
 .typing span {
 
@@ -372,39 +961,38 @@ button {
 
     border-radius: 50%;
 
-    background: #aaa;
+    background:
+        var(--purple-light);
 
     animation:
         typing 1s infinite;
+
 }
+
 
 .typing span:nth-child(2) {
-    animation-delay: 0.15s;
+    animation-delay: .15s;
 }
 
+
 .typing span:nth-child(3) {
-    animation-delay: 0.3s;
+    animation-delay: .3s;
 }
+
 
 @keyframes typing {
 
     0%,
-    60%,
     100% {
-
-        opacity: 0.25;
-
-        transform:
-            translateY(0);
+        transform: translateY(0);
+        opacity: .3;
     }
 
-    30% {
-
+    50% {
+        transform: translateY(-4px);
         opacity: 1;
-
-        transform:
-            translateY(-4px);
     }
+
 }
 
 
@@ -419,10 +1007,10 @@ button {
     gap: 9px;
 
     padding:
-        10px
-        13px
+        9px
+        12px
         calc(
-            12px +
+            10px +
             env(safe-area-inset-bottom)
         );
 
@@ -430,90 +1018,86 @@ button {
         1px solid var(--border);
 
     background:
-        rgba(8,8,12,0.94);
+        rgba(5,6,10,0.9);
 
     backdrop-filter:
         blur(20px);
+
 }
+
 
 .mic {
 
-    width: 49px;
-    min-width: 49px;
+    width: 50px;
+    min-width: 50px;
 
-    height: 49px;
+    height: 50px;
 
     border-radius: 50%;
 
-    background: var(--panel2);
-
-    color: white;
+    background:
+        rgba(255,255,255,0.06);
 
     border:
         1px solid var(--border);
 
-    font-size: 20px;
+    color: white;
+
+    font-size: 21px;
 
     transition:
-        transform 0.15s,
-        background 0.15s;
+        transform .15s,
+        background .2s;
+
 }
+
 
 .mic:active {
 
     transform:
-        scale(0.92);
+        scale(.9);
+
 }
+
 
 .mic.listening {
 
-    background: var(--red);
+    background:
+        var(--cyan);
 
-    animation:
-        pulse 1.2s infinite;
+    color:
+        #001219;
+
+    box-shadow:
+        0 0 30px
+        rgba(67,217,255,0.6);
+
 }
 
-@keyframes pulse {
-
-    0% {
-        box-shadow:
-            0 0 0 0
-            rgba(255,87,87,0.5);
-    }
-
-    70% {
-        box-shadow:
-            0 0 0 12px
-            rgba(255,87,87,0);
-    }
-
-    100% {
-        box-shadow:
-            0 0 0 0
-            rgba(255,87,87,0);
-    }
-}
 
 .input-box {
 
     flex: 1;
 
-    min-height: 49px;
+    min-height: 50px;
 
     display: flex;
 
     align-items: flex-end;
 
     padding:
-        5px 6px 5px 14px;
+        5px 5px 5px 14px;
 
     border-radius: 25px;
 
-    background: var(--panel);
+    background:
+        rgba(255,255,255,0.055);
 
     border:
         1px solid var(--border);
+
 }
+
 
 textarea {
 
@@ -526,76 +1110,124 @@ textarea {
     padding:
         8px 4px;
 
-    outline: none;
+    background:
+        transparent;
 
     border: 0;
 
-    background: transparent;
+    outline: 0;
 
     color: white;
+
 }
+
 
 .send {
 
-    width: 39px;
-    height: 39px;
+    width: 40px;
+    height: 40px;
 
     border-radius: 50%;
 
-    background: var(--accent);
+    background:
+        var(--purple);
 
     color: white;
 
     font-size: 17px;
+
 }
 
 
 /* =====================================================
-   MODE VOCAL
+   MOBILE
 ===================================================== */
 
-.voice-indicator {
+@media (max-height: 700px) {
 
-    display: none;
+    .core-area {
+        height: 35%;
+        min-height: 240px;
+    }
 
-    position: fixed;
+    .core {
+        transform: scale(.82);
+    }
 
-    left: 50%;
+    .welcome {
+        padding-top: 0;
+    }
 
-    bottom:
-        calc(
-            85px +
-            env(safe-area-inset-bottom)
-        );
-
-    transform:
-        translateX(-50%);
-
-    padding:
-        10px 18px;
-
-    border-radius: 20px;
-
-    background:
-        rgba(118,87,255,0.95);
-
-    color: white;
-
-    font-size: 13px;
-
-    box-shadow:
-        0 10px 30px
-        rgba(0,0,0,0.3);
-
-    z-index: 20;
 }
 
-.voice-indicator.active {
-    display: block;
+
+/* =====================================================
+   PARTICULES
+===================================================== */
+
+.particle {
+
+    position: absolute;
+
+    width: 3px;
+    height: 3px;
+
+    border-radius: 50%;
+
+    background:
+        var(--purple-light);
+
+    box-shadow:
+        0 0 8px
+        var(--purple);
+
+    opacity: .6;
+
+    animation:
+        particleFloat
+        var(--duration)
+        linear infinite;
+
+}
+
+
+@keyframes particleFloat {
+
+    from {
+
+        transform:
+            rotate(var(--angle))
+            translateX(100px);
+
+        opacity: 0;
+
+    }
+
+    30% {
+        opacity: .7;
+    }
+
+    70% {
+        opacity: .7;
+    }
+
+    to {
+
+        transform:
+            rotate(
+                calc(
+                    var(--angle) + 360deg
+                )
+            )
+            translateX(100px);
+
+        opacity: 0;
+
+    }
+
 }
 
 </style>
-
 </head>
 
 
@@ -604,26 +1236,30 @@ textarea {
 <div class="app">
 
 
-<header class="topbar">
+<!-- ===================================================
+     HEADER
+=================================================== -->
+
+<header class="header">
 
     <div class="brand">
 
-        <div class="logo">
+        <div class="brand-icon">
             ✦
         </div>
 
         <div>
 
-            <h1>
+            <div class="brand-name">
                 Asdrick AI
-            </h1>
+            </div>
 
-            <span
+            <div
                 id="status"
                 class="status"
             >
-                ● En ligne
-            </span>
+                ● EN LIGNE
+            </div>
 
         </div>
 
@@ -634,7 +1270,6 @@ textarea {
         id="clear"
         class="clear"
         type="button"
-        aria-label="Effacer"
     >
         🗑️
     </button>
@@ -642,62 +1277,166 @@ textarea {
 </header>
 
 
-<main
-    id="chat"
-    class="chat"
->
+<!-- ===================================================
+     CORE
+=================================================== -->
+
+<section class="core-area">
+
+    <div class="grid"></div>
 
 
-<section
-    id="welcome"
-    class="welcome"
->
+    <div
+        id="core"
+        class="core"
+    >
 
-    <div class="big-logo">
-        ✦
-    </div>
-
-    <h2>
-        Salut Asdrick 👋
-    </h2>
-
-    <p>
-        Ton assistant personnel.
-    </p>
+        <div
+            id="particles"
+        ></div>
 
 
-    <div class="suggestions">
+        <div class="ring one"></div>
 
-        <button
-            class="suggestion"
-            data-command="Bonjour !"
-        >
-            👋 Dis bonjour
-        </button>
+        <div class="ring two"></div>
+
+        <div class="ring three"></div>
 
 
-        <button
-            class="suggestion"
-            data-command="Explique-moi quelque chose d'intéressant."
-        >
-            🧠 Apprends-moi quelque chose
-        </button>
+        <div class="core-glow"></div>
 
 
-        <button
-            class="suggestion"
-            data-command="Ouvre YouTube"
-        >
-            ▶️ Ouvre YouTube
-        </button>
+        <div class="audio-bars">
+
+            <span
+                class="audio-bar"
+                style="--height:1.8;--delay:.00s"
+            ></span>
+
+            <span
+                class="audio-bar"
+                style="--height:2.5;--delay:.08s"
+            ></span>
+
+            <span
+                class="audio-bar"
+                style="--height:1.4;--delay:.16s"
+            ></span>
+
+            <span
+                class="audio-bar"
+                style="--height:3;--delay:.24s"
+            ></span>
+
+            <span
+                class="audio-bar"
+                style="--height:2;--delay:.32s"
+            ></span>
+
+            <span
+                class="audio-bar"
+                style="--height:3.5;--delay:.40s"
+            ></span>
+
+            <span
+                class="audio-bar"
+                style="--height:2;--delay:.48s"
+            ></span>
+
+            <span
+                class="audio-bar"
+                style="--height:1.5;--delay:.56s"
+            ></span>
+
+            <span
+                class="audio-bar"
+                style="--height:2.7;--delay:.64s"
+            ></span>
+
+            <span
+                class="audio-bar"
+                style="--height:1.8;--delay:.72s"
+            ></span>
+
+        </div>
+
+
+        <div class="core-ball">
+
+            <div class="core-symbol">
+                ✦
+            </div>
+
+        </div>
+
+
+        <div class="core-label">
+            ASDRICK CORE
+        </div>
 
     </div>
 
 </section>
 
 
+<!-- ===================================================
+     CHAT
+=================================================== -->
+
+<main
+    id="chat"
+    class="chat"
+>
+
+    <section
+        id="welcome"
+        class="welcome"
+    >
+
+        <h2>
+            Salut Asdrick 👋
+        </h2>
+
+        <p>
+            Je suis prêt.
+        </p>
+
+
+        <div class="suggestions">
+
+            <button
+                class="suggestion"
+                data-command="Bonjour !"
+            >
+                👋 Bonjour
+            </button>
+
+
+            <button
+                class="suggestion"
+                data-command="Dis-moi quelque chose d'intéressant."
+            >
+                🧠 Surprends-moi
+            </button>
+
+
+            <button
+                class="suggestion"
+                data-command="Ouvre YouTube"
+            >
+                ▶️ YouTube
+            </button>
+
+        </div>
+
+    </section>
+
 </main>
 
+
+<!-- ===================================================
+     TYPING
+=================================================== -->
 
 <div
     id="typing"
@@ -711,57 +1450,48 @@ textarea {
 </div>
 
 
-<div
-    id="voiceIndicator"
-    class="voice-indicator"
->
-    🎙️ Je t'écoute...
-</div>
-
+<!-- ===================================================
+     INPUT
+=================================================== -->
 
 <footer class="input-area">
 
 
-<button
-    id="mic"
-    class="mic"
-    type="button"
-    aria-label="Microphone"
->
-    🎙️
-</button>
+    <button
+        id="mic"
+        class="mic"
+        type="button"
+        aria-label="Microphone"
+    >
+        🎙️
+    </button>
 
 
-<div class="input-box">
+    <div class="input-box">
 
-<textarea
-    id="input"
-    rows="1"
-    placeholder="Écris ou parle..."
-></textarea>
+        <textarea
+            id="input"
+            rows="1"
+            placeholder="Écris ou parle..."
+        ></textarea>
 
 
-<button
-    id="send"
-    class="send"
-    type="button"
-    aria-label="Envoyer"
->
-    ➤
-</button>
+        <button
+            id="send"
+            class="send"
+            type="button"
+            aria-label="Envoyer"
+        >
+            ➤
+        </button>
 
-</div>
+    </div>
+
 
 </footer>
 
 
-</div>
-
-
 <script>
-
-"use strict";
-
 
 /* =====================================================
    CONFIGURATION
@@ -828,10 +1558,11 @@ const typing =
 const status =
     document.getElementById("status");
 
-const voiceIndicator =
-    document.getElementById(
-        "voiceIndicator"
-    );
+const core =
+    document.getElementById("core");
+
+const particles =
+    document.getElementById("particles");
 
 
 let sending = false;
@@ -843,6 +1574,118 @@ let listening = false;
 let speaking = false;
 
 let currentUtterance = null;
+
+
+/* =====================================================
+   PARTICULES
+===================================================== */
+
+function createParticles() {
+
+    for (
+        let i = 0;
+        i < 18;
+        i++
+    ) {
+
+        const particle =
+            document.createElement("div");
+
+
+        particle.className =
+            "particle";
+
+
+        particle.style.setProperty(
+            "--angle",
+            `${Math.random() * 360}deg`
+        );
+
+
+        particle.style.setProperty(
+            "--duration",
+            `${5 + Math.random() * 8}s`
+        );
+
+
+        particle.style.animationDelay =
+            `${Math.random() * -8}s`;
+
+
+        particles.appendChild(
+            particle
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   ÉTAT CORE
+===================================================== */
+
+function setCoreState(
+    state
+) {
+
+    core.classList.remove(
+        "listening",
+        "thinking",
+        "speaking"
+    );
+
+
+    if (state) {
+
+        core.classList.add(
+            state
+        );
+
+    }
+
+
+    if (state === "listening") {
+
+        status.textContent =
+            "● JE T'ÉCOUTE";
+
+        status.className =
+            "status listening";
+
+    }
+
+    else if (state === "thinking") {
+
+        status.textContent =
+            "● JE RÉFLÉCHIS...";
+
+        status.className =
+            "status thinking";
+
+    }
+
+    else if (state === "speaking") {
+
+        status.textContent =
+            "● JE PARLE...";
+
+        status.className =
+            "status speaking";
+
+    }
+
+    else {
+
+        status.textContent =
+            "● EN LIGNE";
+
+        status.className =
+            "status";
+
+    }
+
+}
 
 
 /* =====================================================
@@ -858,18 +1701,23 @@ function getHistory() {
                 "asdrick_history"
             );
 
+
         if (!data) {
             return [];
         }
 
+
         const parsed =
             JSON.parse(data);
+
 
         return Array.isArray(parsed)
             ? parsed
             : [];
 
-    } catch {
+    }
+
+    catch {
 
         return [];
 
@@ -893,7 +1741,8 @@ function saveMessage(
 
             type,
             text,
-            date: Date.now()
+            date:
+                Date.now()
 
         });
 
@@ -905,10 +1754,12 @@ function saveMessage(
             )
         );
 
-    } catch (error) {
+    }
+
+    catch (error) {
 
         console.error(
-            "Erreur mémoire :",
+            "Mémoire :",
             error
         );
 
@@ -918,51 +1769,7 @@ function saveMessage(
 
 
 /* =====================================================
-   HISTORIQUE → CHAT
-===================================================== */
-
-function loadHistory() {
-
-    const history =
-        getHistory();
-
-
-    if (!history.length) {
-        return;
-    }
-
-
-    welcome.style.display =
-        "none";
-
-
-    history.forEach(
-        item => {
-
-            if (
-                !item ||
-                (
-                    item.type !== "user" &&
-                    item.type !== "ai"
-                )
-            ) {
-                return;
-            }
-
-
-            addMessage(
-                item.type,
-                item.text
-            );
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   MESSAGE
+   AFFICHAGE MESSAGE
 ===================================================== */
 
 function addMessage(
@@ -971,7 +1778,9 @@ function addMessage(
 ) {
 
     const row =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
 
     row.className =
@@ -979,7 +1788,9 @@ function addMessage(
 
 
     const bubble =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
 
     bubble.className =
@@ -1007,7 +1818,53 @@ function addMessage(
 
 
 /* =====================================================
-   ACTIONS IPHONE
+   CHARGER HISTORIQUE
+===================================================== */
+
+function loadHistory() {
+
+    const history =
+        getHistory();
+
+
+    if (!history.length) {
+        return;
+    }
+
+
+    welcome.style.display =
+        "none";
+
+
+    history.forEach(
+        item => {
+
+            if (
+                !item ||
+                (
+                    item.type !== "user" &&
+                    item.type !== "ai"
+                )
+            ) {
+
+                return;
+
+            }
+
+
+            addMessage(
+                item.type,
+                item.text
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   ACTIONS
 ===================================================== */
 
 function executeAction(
@@ -1015,7 +1872,10 @@ function executeAction(
     url = null
 ) {
 
-    if (action === "open_website") {
+    if (
+        action ===
+        "open_website"
+    ) {
 
         if (!url) {
             return;
@@ -1024,6 +1884,7 @@ function executeAction(
 
         window.location.href =
             url;
+
 
         return;
 
@@ -1040,6 +1901,7 @@ function executeAction(
             "Action inconnue :",
             action
         );
+
 
         return;
 
@@ -1060,7 +1922,7 @@ function executeAction(
 
 
 /* =====================================================
-   ENVOI
+   ENVOYER
 ===================================================== */
 
 async function sendMessage() {
@@ -1082,10 +1944,11 @@ async function sendMessage() {
     sending = true;
 
 
-    input.value = "";
-
-
     stopSpeaking();
+
+
+    input.value =
+        "";
 
 
     welcome.style.display =
@@ -1101,28 +1964,33 @@ async function sendMessage() {
     const history =
         getHistory()
 
-            .filter(item =>
-                item &&
-                (
-                    item.type === "user" ||
-                    item.type === "ai"
-                ) &&
-                typeof item.text === "string"
+            .filter(
+                item =>
+                    item &&
+                    (
+                        item.type ===
+                        "user" ||
+                        item.type ===
+                        "ai"
+                    )
             )
 
             .slice(-20)
 
-            .map(item => ({
+            .map(
+                item => ({
 
-                role:
-                    item.type === "user"
-                        ? "user"
-                        : "assistant",
+                    role:
+                        item.type ===
+                        "user"
+                            ? "user"
+                            : "assistant",
 
-                content:
-                    item.text
+                    content:
+                        item.text
 
-            }));
+                })
+            );
 
 
     saveMessage(
@@ -1131,7 +1999,14 @@ async function sendMessage() {
     );
 
 
-    setThinking(true);
+    setCoreState(
+        "thinking"
+    );
+
+
+    typing.classList.add(
+        "active"
+    );
 
 
     try {
@@ -1142,11 +2017,14 @@ async function sendMessage() {
                 "/api/chat",
                 {
 
-                    method: "POST",
+                    method:
+                        "POST",
 
                     headers: {
+
                         "Content-Type":
                             "application/json"
+
                     },
 
                     body:
@@ -1178,7 +2056,8 @@ async function sendMessage() {
 
         if (
             !data ||
-            typeof data.reply !== "string"
+            typeof data.reply !==
+                "string"
         ) {
 
             throw new Error(
@@ -1186,6 +2065,11 @@ async function sendMessage() {
             );
 
         }
+
+
+        typing.classList.remove(
+            "active"
+        );
 
 
         addMessage(
@@ -1199,14 +2083,6 @@ async function sendMessage() {
             data.reply
         );
 
-
-        setThinking(false);
-
-
-        /*
-         * L'action est lancée après
-         * l'affichage de la réponse.
-         */
 
         if (data.action) {
 
@@ -1222,12 +2098,18 @@ async function sendMessage() {
             data.reply
         );
 
+    }
 
-    } catch (error) {
+    catch (error) {
 
         console.error(
             "Erreur API :",
             error
+        );
+
+
+        typing.classList.remove(
+            "active"
         );
 
 
@@ -1237,17 +2119,16 @@ async function sendMessage() {
         );
 
 
-        status.textContent =
-            "● Erreur serveur";
+        setCoreState(
+            null
+        );
 
+    }
 
-        status.className =
-            "status error";
+    finally {
 
-
-    } finally {
-
-        sending = false;
+        sending =
+            false;
 
     }
 
@@ -1304,11 +2185,6 @@ function getFrenchVoice() {
         speechSynthesis.getVoices();
 
 
-    if (!voices.length) {
-        return null;
-    }
-
-
     const french =
         voices.filter(
             voice =>
@@ -1320,7 +2196,9 @@ function getFrenchVoice() {
 
 
     if (!french.length) {
+
         return null;
+
     }
 
 
@@ -1328,7 +2206,9 @@ function getFrenchVoice() {
         french.find(
             voice =>
                 /premium|enhanced|natural|neural/i
-                    .test(voice.name)
+                    .test(
+                        voice.name
+                    )
         );
 
 
@@ -1352,7 +2232,9 @@ function speak(
 
 
     const clean =
-        cleanTextForVoice(text);
+        cleanTextForVoice(
+            text
+        );
 
 
     if (!clean) {
@@ -1400,13 +2282,13 @@ function speak(
     currentUtterance.onstart =
         () => {
 
-            speaking = true;
+            speaking =
+                true;
 
-            status.textContent =
-                "● Je parle...";
 
-            status.className =
-                "status thinking";
+            setCoreState(
+                "speaking"
+            );
 
         };
 
@@ -1414,15 +2296,17 @@ function speak(
     currentUtterance.onend =
         () => {
 
-            speaking = false;
+            speaking =
+                false;
 
-            currentUtterance = null;
 
-            status.textContent =
-                "● En ligne";
+            currentUtterance =
+                null;
 
-            status.className =
-                "status";
+
+            setCoreState(
+                null
+            );
 
         };
 
@@ -1431,19 +2315,22 @@ function speak(
         error => {
 
             console.error(
-                "Erreur voix :",
+                "Voix :",
                 error
             );
 
-            speaking = false;
 
-            currentUtterance = null;
+            speaking =
+                false;
 
-            status.textContent =
-                "● En ligne";
 
-            status.className =
-                "status";
+            currentUtterance =
+                null;
+
+
+            setCoreState(
+                null
+            );
 
         };
 
@@ -1458,7 +2345,8 @@ function speak(
 function stopSpeaking() {
 
     if (
-        "speechSynthesis" in window
+        "speechSynthesis"
+        in window
     ) {
 
         speechSynthesis.cancel();
@@ -1466,15 +2354,23 @@ function stopSpeaking() {
     }
 
 
-    speaking = false;
+    speaking =
+        false;
 
-    currentUtterance = null;
+
+    currentUtterance =
+        null;
+
+
+    setCoreState(
+        null
+    );
 
 }
 
 
 /* =====================================================
-   MICROPHONE
+   MICRO
 ===================================================== */
 
 function setupVoice() {
@@ -1486,12 +2382,13 @@ function setupVoice() {
 
     if (!SpeechRecognition) {
 
-        mic.disabled = true;
+        mic.disabled =
+            true;
 
-        mic.style.opacity = "0.4";
 
-        status.textContent =
-            "● Micro indisponible";
+        mic.style.opacity =
+            ".4";
+
 
         return;
 
@@ -1521,7 +2418,8 @@ function setupVoice() {
     recognition.onstart =
         () => {
 
-            listening = true;
+            listening =
+                true;
 
 
             stopSpeaking();
@@ -1532,17 +2430,9 @@ function setupVoice() {
             );
 
 
-            voiceIndicator.classList.add(
-                "active"
+            setCoreState(
+                "listening"
             );
-
-
-            status.textContent =
-                "● Je t'écoute...";
-
-
-            status.className =
-                "status thinking";
 
         };
 
@@ -1570,7 +2460,9 @@ function setupVoice() {
 
                 sendMessage();
 
-            } catch (error) {
+            }
+
+            catch (error) {
 
                 console.error(
                     "Résultat vocal :",
@@ -1586,7 +2478,7 @@ function setupVoice() {
         error => {
 
             console.error(
-                "Erreur micro :",
+                "Micro :",
                 error
             );
 
@@ -1601,7 +2493,7 @@ function setupVoice() {
 
                 addMessage(
                     "ai",
-                    "🎙️ L'accès au micro est refusé. Autorise le microphone dans les réglages du navigateur."
+                    "🎙️ Autorise le microphone dans les réglages du navigateur."
                 );
 
             }
@@ -1638,10 +2530,12 @@ function startListening() {
 
         recognition.start();
 
-    } catch (error) {
+    }
+
+    catch (error) {
 
         console.error(
-            "Démarrage micro :",
+            "Micro :",
             error
         );
 
@@ -1652,7 +2546,8 @@ function startListening() {
 
 function stopListening() {
 
-    listening = false;
+    listening =
+        false;
 
 
     mic.classList.remove(
@@ -1660,18 +2555,11 @@ function stopListening() {
     );
 
 
-    voiceIndicator.classList.remove(
-        "active"
-    );
-
-
     if (!sending) {
 
-        status.textContent =
-            "● En ligne";
-
-        status.className =
-            "status";
+        setCoreState(
+            null
+        );
 
     }
 
@@ -1686,8 +2574,9 @@ mic.addEventListener(
 
             addMessage(
                 "ai",
-                "🎙️ La reconnaissance vocale n'est pas disponible dans ce navigateur."
+                "🎙️ La reconnaissance vocale n'est pas disponible ici."
             );
+
 
             return;
 
@@ -1700,9 +2589,13 @@ mic.addEventListener(
 
                 recognition.stop();
 
-            } catch {}
+            }
 
-        } else {
+            catch {}
+
+        }
+
+        else {
 
             startListening();
 
@@ -1730,6 +2623,7 @@ document
                     input.value =
                         button.dataset.command;
 
+
                     sendMessage();
 
                 }
@@ -1748,7 +2642,8 @@ input.addEventListener(
     event => {
 
         if (
-            event.key === "Enter" &&
+            event.key ===
+                "Enter" &&
             !event.shiftKey
         ) {
 
@@ -1796,47 +2691,10 @@ clear.addEventListener(
 
 
 /* =====================================================
-   ÉTAT
+   INIT
 ===================================================== */
 
-function setThinking(
-    active
-) {
-
-    if (active) {
-
-        typing.classList.add(
-            "active"
-        );
-
-
-        status.textContent =
-            "● Je réfléchis...";
-
-
-        status.className =
-            "status thinking";
-
-    } else {
-
-        typing.classList.remove(
-            "active"
-        );
-
-        status.textContent =
-            "● En ligne";
-
-        status.className =
-            "status";
-
-    }
-
-}
-
-
-/* =====================================================
-   INITIALISATION
-===================================================== */
+createParticles();
 
 loadHistory();
 
@@ -1844,7 +2702,8 @@ setupVoice();
 
 
 if (
-    "speechSynthesis" in window
+    "speechSynthesis"
+    in window
 ) {
 
     speechSynthesis.onvoiceschanged =
