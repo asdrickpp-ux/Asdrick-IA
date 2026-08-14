@@ -13,7 +13,8 @@
     padding:0;
 }
 
-html,body{
+html,
+body{
     width:100%;
     height:100%;
     overflow:hidden;
@@ -25,30 +26,32 @@ body{
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 }
 
-button,textarea{
+button,
+textarea{
     font:inherit;
 }
 
-/* =====================================================
-   APP
-===================================================== */
+button{
+    -webkit-tap-highlight-color:transparent;
+}
 
 .app{
     position:relative;
     width:100%;
     height:100dvh;
     overflow:hidden;
+
     background:
         radial-gradient(
             circle at 50% 42%,
-            rgba(95,70,255,.12),
-            transparent 34%
+            rgba(95,70,255,.13),
+            transparent 35%
         ),
         #03040a;
 }
 
 /* =====================================================
-   HUD GLOBAL
+   HUD
 ===================================================== */
 
 .hud{
@@ -59,12 +62,11 @@ button,textarea{
     z-index:0;
 }
 
-/* grille */
-
 .hud-grid{
     position:absolute;
     inset:-30%;
-    opacity:.12;
+
+    opacity:.11;
 
     background-image:
         linear-gradient(
@@ -88,23 +90,25 @@ button,textarea{
 }
 
 @keyframes gridMove{
+
     from{
         background-position:0 0;
     }
+
     to{
         background-position:0 38px;
     }
-}
 
-/* grand halo */
+}
 
 .halo{
     position:absolute;
-    left:50%;
-    top:45%;
 
-    width:650px;
-    height:650px;
+    left:50%;
+    top:44%;
+
+    width:700px;
+    height:700px;
 
     transform:translate(-50%,-50%);
 
@@ -113,15 +117,15 @@ button,textarea{
     background:
         radial-gradient(
             circle,
-            rgba(95,70,255,.08),
+            rgba(95,70,255,.09),
             transparent 65%
         );
 
-    filter:blur(5px);
+    filter:blur(6px);
 }
 
 /* =====================================================
-   JARVIS CORE
+   CORE
 ===================================================== */
 
 .hud-core{
@@ -135,7 +139,7 @@ button,textarea{
 
     transform:translate(-50%,-50%);
 
-    opacity:.55;
+    opacity:.56;
 }
 
 .hud-ring{
@@ -156,7 +160,7 @@ button,textarea{
     height:340px;
 
     border-left-color:transparent;
-    border-right-color:rgba(70,210,255,.35);
+    border-right-color:rgba(70,210,255,.38);
 
     animation:spin 18s linear infinite;
 }
@@ -166,7 +170,9 @@ button,textarea{
     height:290px;
 
     border-style:dashed;
-    border-color:rgba(70,210,255,.25);
+
+    border-color:
+        rgba(70,210,255,.25);
 
     animation:spinReverse 12s linear infinite;
 }
@@ -175,8 +181,11 @@ button,textarea{
     width:240px;
     height:240px;
 
-    border-top-color:rgba(160,130,255,.5);
-    border-bottom-color:transparent;
+    border-top-color:
+        rgba(160,130,255,.55);
+
+    border-bottom-color:
+        transparent;
 
     animation:spin 8s linear infinite;
 }
@@ -185,32 +194,39 @@ button,textarea{
     width:190px;
     height:190px;
 
-    border-color:rgba(80,180,255,.18);
+    border-color:
+        rgba(80,180,255,.18);
 
     animation:pulse 3s ease-in-out infinite;
 }
 
 @keyframes spin{
+
     to{
         transform:
             translate(-50%,-50%)
             rotate(360deg);
     }
+
 }
 
 @keyframes spinReverse{
+
     to{
         transform:
             translate(-50%,-50%)
             rotate(-360deg);
     }
+
 }
 
 @keyframes pulse{
+
     0%,100%{
         transform:
             translate(-50%,-50%)
             scale(.92);
+
         opacity:.35;
     }
 
@@ -218,11 +234,11 @@ button,textarea{
         transform:
             translate(-50%,-50%)
             scale(1.08);
+
         opacity:.75;
     }
-}
 
-/* noyau */
+}
 
 .core-light{
     position:absolute;
@@ -255,6 +271,7 @@ button,textarea{
 }
 
 @keyframes corePulse{
+
     0%,100%{
         transform:
             translate(-50%,-50%)
@@ -266,16 +283,18 @@ button,textarea{
             translate(-50%,-50%)
             scale(1.12);
     }
+
 }
 
 /* =====================================================
-   HUD LINES
+   SCANNERS
 ===================================================== */
 
 .scan-line{
     position:absolute;
 
     left:-20%;
+
     width:140%;
     height:1px;
 
@@ -283,7 +302,7 @@ button,textarea{
         linear-gradient(
             90deg,
             transparent,
-            rgba(90,190,255,.35),
+            rgba(90,190,255,.4),
             transparent
         );
 
@@ -300,6 +319,7 @@ button,textarea{
 }
 
 @keyframes scan{
+
     0%{
         transform:translateX(-20%);
         opacity:0;
@@ -317,10 +337,11 @@ button,textarea{
         transform:translateX(20%);
         opacity:0;
     }
+
 }
 
 /* =====================================================
-   HUD POINTS
+   POINTS
 ===================================================== */
 
 .hud-point{
@@ -340,6 +361,7 @@ button,textarea{
 }
 
 @keyframes pointPulse{
+
     0%,100%{
         opacity:.2;
         transform:scale(.6);
@@ -349,6 +371,7 @@ button,textarea{
         opacity:1;
         transform:scale(1.5);
     }
+
 }
 
 /* =====================================================
@@ -405,6 +428,7 @@ button,textarea{
 
         opacity:0;
     }
+
 }
 
 /* =====================================================
@@ -444,7 +468,7 @@ button,textarea{
     background:
         linear-gradient(
             180deg,
-            rgba(3,4,10,.92),
+            rgba(3,4,10,.94),
             rgba(3,4,10,.55)
         );
 
@@ -526,6 +550,8 @@ button,textarea{
         rgba(255,255,255,.05);
 
     color:white;
+
+    cursor:pointer;
 }
 
 /* =====================================================
@@ -547,7 +573,7 @@ button,textarea{
     background:
         linear-gradient(
             180deg,
-            rgba(3,4,10,.10),
+            rgba(3,4,10,.08),
             rgba(3,4,10,.58)
         );
 }
@@ -569,6 +595,7 @@ button,textarea{
 
 .welcome h2{
     font-size:23px;
+
     margin-bottom:7px;
 
     text-shadow:
@@ -577,11 +604,13 @@ button,textarea{
 
 .welcome p{
     color:rgba(255,255,255,.5);
+
     font-size:14px;
 }
 
 .suggestions{
     display:flex;
+
     gap:8px;
 
     overflow-x:auto;
@@ -608,6 +637,8 @@ button,textarea{
         rgba(12,14,25,.65);
 
     color:white;
+
+    cursor:pointer;
 }
 
 /* =====================================================
@@ -616,6 +647,7 @@ button,textarea{
 
 .message{
     display:flex;
+
     margin-bottom:12px;
 }
 
@@ -639,6 +671,7 @@ button,textarea{
     line-height:1.45;
 
     white-space:pre-wrap;
+
     overflow-wrap:anywhere;
 
     backdrop-filter:blur(12px);
@@ -660,7 +693,7 @@ button,textarea{
 
 .ai .bubble{
     background:
-        rgba(13,15,25,.72);
+        rgba(13,15,25,.76);
 
     border:
         1px solid rgba(120,110,255,.12);
@@ -708,6 +741,7 @@ button,textarea{
 }
 
 @keyframes typing{
+
     0%,100%{
         transform:translateY(0);
         opacity:.3;
@@ -717,6 +751,7 @@ button,textarea{
         transform:translateY(-4px);
         opacity:1;
     }
+
 }
 
 /* =====================================================
@@ -727,6 +762,7 @@ button,textarea{
     flex-shrink:0;
 
     display:flex;
+
     gap:9px;
 
     padding:
@@ -765,6 +801,8 @@ button,textarea{
     font-size:20px;
 
     transition:.2s;
+
+    cursor:pointer;
 }
 
 .mic:active{
@@ -841,16 +879,19 @@ textarea::placeholder{
 
     box-shadow:
         0 0 20px rgba(118,87,255,.3);
+
+    cursor:pointer;
 }
 
 /* =====================================================
-   RESPONSIVE
+   MOBILE
 ===================================================== */
 
 @media(max-height:700px){
 
     .hud-core{
         top:38%;
+
         transform:
             translate(-50%,-50%)
             scale(.78);
@@ -859,8 +900,8 @@ textarea::placeholder{
     .welcome{
         padding-top:8px;
     }
-}
 
+}
 </style>
 </head>
 
@@ -869,7 +910,7 @@ textarea::placeholder{
 <div class="app">
 
     <!-- =================================================
-         HUD ARRIÈRE-PLAN
+         HUD JARVIS
     ================================================== -->
 
     <div class="hud">
@@ -879,13 +920,17 @@ textarea::placeholder{
         <div class="halo"></div>
 
         <div class="scan-line scan1"></div>
+
         <div class="scan-line scan2"></div>
 
         <div class="hud-core">
 
             <div class="hud-ring r1"></div>
+
             <div class="hud-ring r2"></div>
+
             <div class="hud-ring r3"></div>
+
             <div class="hud-ring r4"></div>
 
             <div class="core-light"></div>
@@ -1073,6 +1118,17 @@ const API_URL =
     "https://asdrick-ia.onrender.com";
 
 
+/* =====================================================
+   RACCOURCIS IPHONE
+=====================================================
+
+   IMPORTANT :
+
+   Les raccourcis doivent être installés sur
+   l'iPhone avec les noms EXACTS ci-dessous.
+
+===================================================== */
+
 const SHORTCUTS = {
 
     open_youtube:
@@ -1107,31 +1163,49 @@ const SHORTCUTS = {
 ===================================================== */
 
 const chat =
-    document.getElementById("chat");
+    document.getElementById(
+        "chat"
+    );
 
 const welcome =
-    document.getElementById("welcome");
+    document.getElementById(
+        "welcome"
+    );
 
 const input =
-    document.getElementById("input");
+    document.getElementById(
+        "input"
+    );
 
 const send =
-    document.getElementById("send");
+    document.getElementById(
+        "send"
+    );
 
 const mic =
-    document.getElementById("mic");
+    document.getElementById(
+        "mic"
+    );
 
 const clear =
-    document.getElementById("clear");
+    document.getElementById(
+        "clear"
+    );
 
 const typing =
-    document.getElementById("typing");
+    document.getElementById(
+        "typing"
+    );
 
 const status =
-    document.getElementById("status");
+    document.getElementById(
+        "status"
+    );
 
 let recognition = null;
+
 let listening = false;
+
 let sending = false;
 
 
@@ -1166,21 +1240,28 @@ function createParticles(){
 
         p.style.setProperty(
             "--move",
-            ((Math.random() * 180) - 90) +
-            "px"
+            (
+                Math.random() * 180 -
+                90
+            ) + "px"
         );
 
         p.style.setProperty(
             "--duration",
-            (6 + Math.random() * 10) +
-            "s"
+            (
+                6 +
+                Math.random() * 10
+            ) + "s"
         );
 
         p.style.animationDelay =
-            (Math.random() * -12) +
-            "s";
+            (
+                Math.random() * -12
+            ) + "s";
 
-        container.appendChild(p);
+        container.appendChild(
+            p
+        );
 
     }
 
@@ -1188,18 +1269,10 @@ function createParticles(){
 
 
 /* =====================================================
-   CORE / STATUS
+   ÉTAT
 ===================================================== */
 
 function setState(state){
-
-    document
-        .querySelector(".hud")
-        .classList.remove(
-            "listening",
-            "thinking",
-            "speaking"
-        );
 
     status.className =
         "status";
@@ -1249,23 +1322,23 @@ function setState(state){
 
 
 /* =====================================================
-   STORAGE
+   HISTORIQUE
 ===================================================== */
 
 function getHistory(){
 
     try{
 
-        const value =
+        const data =
             localStorage.getItem(
                 "asdrick_history"
             );
 
-        if(!value)
+        if(!data)
             return [];
 
         const parsed =
-            JSON.parse(value);
+            JSON.parse(data);
 
         return Array.isArray(parsed)
             ? parsed
@@ -1290,9 +1363,14 @@ function saveMessage(
         getHistory();
 
     history.push({
+
         type,
+
         text,
-        date:Date.now()
+
+        date:
+            Date.now()
+
     });
 
     localStorage.setItem(
@@ -1306,7 +1384,7 @@ function saveMessage(
 
 
 /* =====================================================
-   MESSAGE
+   AFFICHER MESSAGE
 ===================================================== */
 
 function addMessage(
@@ -1348,7 +1426,7 @@ function addMessage(
 
 
 /* =====================================================
-   LOAD HISTORY
+   CHARGER HISTORIQUE
 ===================================================== */
 
 function loadHistory(){
@@ -1384,7 +1462,7 @@ function loadHistory(){
 
 
 /* =====================================================
-   ACTIONS
+   EXÉCUTER UNE ACTION
 ===================================================== */
 
 function executeAction(
@@ -1392,7 +1470,14 @@ function executeAction(
     url
 ){
 
-    if(action === "open_website"){
+    /* ---------------------------------------------
+       SITE INTERNET
+    --------------------------------------------- */
+
+    if(
+        action ===
+        "open_website"
+    ){
 
         if(url){
 
@@ -1402,25 +1487,52 @@ function executeAction(
         }
 
         return;
+
     }
+
+
+    /* ---------------------------------------------
+       RACCOURCI IPHONE
+    --------------------------------------------- */
 
     const shortcut =
         SHORTCUTS[action];
 
-    if(!shortcut)
+
+    if(!shortcut){
+
+        console.warn(
+            "Raccourci inconnu :",
+            action
+        );
+
         return;
 
-    window.location.href =
+    }
+
+
+    /*
+       Lancement direct du raccourci.
+
+       Le raccourci doit être installé
+       sur l'iPhone.
+    */
+
+    const shortcutURL =
         "shortcuts://run-shortcut?name=" +
         encodeURIComponent(
             shortcut
         );
 
+
+    window.location.href =
+        shortcutURL;
+
 }
 
 
 /* =====================================================
-   ENVOI MESSAGE
+   ENVOYER MESSAGE
 ===================================================== */
 
 async function sendMessage(){
@@ -1428,50 +1540,79 @@ async function sendMessage(){
     if(sending)
         return;
 
+
     const message =
         input.value.trim();
+
 
     if(!message)
         return;
 
+
     sending = true;
 
-    input.value = "";
+
+    input.value =
+        "";
+
 
     welcome.style.display =
         "none";
+
 
     addMessage(
         "user",
         message
     );
 
+
     saveMessage(
         "user",
         message
     );
 
+
     setState(
         "thinking"
     );
+
 
     typing.classList.add(
         "active"
     );
 
+
     try{
 
+        const allHistory =
+            getHistory();
+
+
         const history =
-            getHistory()
-                .slice(-21)
-                .slice(0,-1)
-                .map(item => ({
-                    role:
-                        item.type === "user"
-                            ? "user"
-                            : "assistant",
-                    content:item.text
-                }));
+            allHistory
+
+                .slice(
+                    0,
+                    -1
+                )
+
+                .slice(
+                    -20
+                )
+
+                .map(
+                    item => ({
+
+                        role:
+                            item.type === "user"
+                                ? "user"
+                                : "assistant",
+
+                        content:
+                            item.text
+
+                    })
+                );
 
 
         const response =
@@ -1479,20 +1620,24 @@ async function sendMessage(){
                 API_URL +
                 "/api/chat",
                 {
-                    method:"POST",
+
+                    method:
+                        "POST",
 
                     headers:{
                         "Content-Type":
                             "application/json"
                     },
 
-                    body:JSON.stringify({
+                    body:
+                        JSON.stringify({
 
-                        message,
+                            message,
 
-                        history
+                            history
 
-                    })
+                        })
+
                 }
             );
 
@@ -1518,7 +1663,7 @@ async function sendMessage(){
 
         const reply =
             data.reply ||
-            "Je n'ai pas de réponse.";
+            "Je n'ai pas réussi à répondre.";
 
 
         addMessage(
@@ -1533,35 +1678,69 @@ async function sendMessage(){
         );
 
 
+        /*
+           Exécuter l'action APRÈS
+           avoir affiché la réponse.
+        */
+
         if(data.action){
 
-            executeAction(
-                data.action,
-                data.url
+            setTimeout(
+                () => {
+
+                    executeAction(
+                        data.action,
+                        data.url
+                    );
+
+                },
+                350
             );
 
         }
 
 
-        speak(
-            reply
-        );
+        /*
+           Vocal uniquement si aucune
+           action n'est en train d'ouvrir
+           une application.
+        */
+
+        if(!data.action){
+
+            speak(
+                reply
+            );
+
+        }
+
+        else{
+
+            setState(
+                null
+            );
+
+        }
 
     }
     catch(error){
 
         console.error(
+            "Erreur Asdrick AI :",
             error
         );
+
 
         typing.classList.remove(
             "active"
         );
 
+
         addMessage(
             "ai",
             "❌ Impossible de contacter le serveur Asdrick AI."
         );
+
 
         setState(
             null
@@ -1570,7 +1749,8 @@ async function sendMessage(){
     }
     finally{
 
-        sending = false;
+        sending =
+            false;
 
     }
 
@@ -1578,50 +1758,68 @@ async function sendMessage(){
 
 
 /* =====================================================
-   SYNTHÈSE VOCALE
+   VOIX
 ===================================================== */
 
 function speak(text){
 
     if(
-        !("speechSynthesis" in window)
-    )
+        !(
+            "speechSynthesis"
+            in window
+        )
+    ){
+
         return;
+
+    }
+
 
     speechSynthesis.cancel();
 
+
     const clean =
         String(text)
+
             .replace(
                 /[\u{1F300}-\u{1FAFF}]/gu,
                 ""
             )
+
             .replace(
                 /[*_`#]/g,
                 ""
             )
+
             .replace(
                 /\s+/g,
                 " "
             )
+
             .trim();
+
 
     if(!clean)
         return;
+
 
     const utterance =
         new SpeechSynthesisUtterance(
             clean
         );
 
+
     utterance.lang =
         "fr-FR";
+
 
     utterance.rate =
         .96;
 
+
     utterance.pitch =
         1;
+
 
     utterance.onstart =
         () => {
@@ -1632,6 +1830,7 @@ function speak(text){
 
         };
 
+
     utterance.onend =
         () => {
 
@@ -1640,6 +1839,7 @@ function speak(text){
             );
 
         };
+
 
     utterance.onerror =
         () => {
@@ -1650,16 +1850,21 @@ function speak(text){
 
         };
 
+
     const voices =
         speechSynthesis.getVoices();
+
 
     const french =
         voices.find(
             voice =>
+
+                voice.lang &&
                 voice.lang
-                    ?.toLowerCase()
+                    .toLowerCase()
                     .startsWith("fr")
         );
+
 
     if(french){
 
@@ -1667,6 +1872,7 @@ function speak(text){
             french;
 
     }
+
 
     speechSynthesis.speak(
         utterance
@@ -1685,9 +1891,11 @@ function setupRecognition(){
         window.SpeechRecognition ||
         window.webkitSpeechRecognition;
 
+
     if(!SpeechRecognition){
 
-        mic.disabled = true;
+        mic.disabled =
+            true;
 
         mic.style.opacity =
             ".4";
@@ -1696,14 +1904,18 @@ function setupRecognition(){
 
     }
 
+
     recognition =
         new SpeechRecognition();
+
 
     recognition.lang =
         "fr-FR";
 
+
     recognition.continuous =
         false;
+
 
     recognition.interimResults =
         false;
@@ -1712,11 +1924,14 @@ function setupRecognition(){
     recognition.onstart =
         () => {
 
-            listening = true;
+            listening =
+                true;
+
 
             mic.classList.add(
                 "listening"
             );
+
 
             setState(
                 "listening"
@@ -1734,10 +1949,12 @@ function setupRecognition(){
                     .transcript
                     .trim();
 
+
             if(result){
 
                 input.value =
                     result;
+
 
                 sendMessage();
 
@@ -1753,6 +1970,7 @@ function setupRecognition(){
                 "Micro :",
                 error
             );
+
 
             stopRecognition();
 
@@ -1771,11 +1989,14 @@ function setupRecognition(){
 
 function stopRecognition(){
 
-    listening = false;
+    listening =
+        false;
+
 
     mic.classList.remove(
         "listening"
     );
+
 
     if(!sending){
 
@@ -1788,6 +2009,10 @@ function stopRecognition(){
 }
 
 
+/* =====================================================
+   MICRO CLICK
+===================================================== */
+
 mic.addEventListener(
     "click",
     () => {
@@ -1795,11 +2020,13 @@ mic.addEventListener(
         if(!recognition)
             return;
 
+
         if(listening){
 
             recognition.stop();
 
         }
+
         else{
 
             if(
@@ -1811,7 +2038,19 @@ mic.addEventListener(
 
             }
 
-            recognition.start();
+
+            try{
+
+                recognition.start();
+
+            }
+            catch(error){
+
+                console.error(
+                    error
+                );
+
+            }
 
         }
 
@@ -1891,6 +2130,7 @@ clear.addEventListener(
             "asdrick_history"
         );
 
+
         chat
             .querySelectorAll(
                 ".message"
@@ -1900,8 +2140,10 @@ clear.addEventListener(
                     element.remove()
             );
 
+
         welcome.style.display =
             "block";
+
 
         if(
             "speechSynthesis"
@@ -1911,6 +2153,7 @@ clear.addEventListener(
             speechSynthesis.cancel();
 
         }
+
 
         setState(
             null
