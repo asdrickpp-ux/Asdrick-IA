@@ -17,7 +17,6 @@
 
 <title>Asdrick AI</title>
 
-
 <style>
 
 * {
@@ -27,24 +26,16 @@
 }
 
 :root {
-
     --bg: #08080c;
     --panel: #121218;
     --panel2: #1a1a22;
-
     --text: #ffffff;
     --muted: #92929d;
-
-    --border:
-        rgba(255,255,255,0.08);
-
+    --border: rgba(255,255,255,0.08);
     --accent: #7657ff;
-
     --green: #55df91;
-
     --red: #ff5757;
 }
-
 
 html,
 body {
@@ -54,11 +45,9 @@ body {
 
     overflow: hidden;
 
-    background:
-        var(--bg);
+    background: var(--bg);
 
-    color:
-        var(--text);
+    color: var(--text);
 
     font-family:
         -apple-system,
@@ -68,24 +57,15 @@ body {
         sans-serif;
 }
 
-
 button,
 textarea {
-
     font: inherit;
-
 }
-
 
 button {
-
     border: 0;
-
-    -webkit-tap-highlight-color:
-        transparent;
-
+    -webkit-tap-highlight-color: transparent;
 }
-
 
 .app {
 
@@ -93,17 +73,14 @@ button {
     height: 100dvh;
 
     display: flex;
-
     flex-direction: column;
 
     background:
-
         radial-gradient(
             circle at 50% -20%,
             rgba(118,87,255,0.2),
             transparent 45%
         ),
-
         var(--bg);
 }
 
@@ -135,9 +112,7 @@ button {
 
     backdrop-filter:
         blur(20px);
-
 }
-
 
 .brand {
 
@@ -146,9 +121,7 @@ button {
     align-items: center;
 
     gap: 11px;
-
 }
-
 
 .logo {
 
@@ -174,16 +147,11 @@ button {
     box-shadow:
         0 0 30px
         rgba(118,87,255,0.3);
-
 }
-
 
 .brand h1 {
-
     font-size: 17px;
-
 }
-
 
 .status {
 
@@ -191,29 +159,18 @@ button {
 
     margin-top: 2px;
 
-    color:
-        var(--green);
+    color: var(--green);
 
     font-size: 11px;
-
 }
-
 
 .status.thinking {
-
-    color:
-        #b08cff;
-
+    color: #b08cff;
 }
-
 
 .status.error {
-
-    color:
-        var(--red);
-
+    color: var(--red);
 }
-
 
 .clear {
 
@@ -222,15 +179,12 @@ button {
 
     border-radius: 12px;
 
-    background:
-        var(--panel2);
+    background: var(--panel2);
 
-    color:
-        white;
+    color: white;
 
     border:
         1px solid var(--border);
-
 }
 
 
@@ -249,14 +203,10 @@ button {
 
     -webkit-overflow-scrolling:
         touch;
-
 }
 
-
 .chat::-webkit-scrollbar {
-
     display: none;
-
 }
 
 
@@ -272,9 +222,7 @@ button {
 
     margin:
         8vh auto 0;
-
 }
-
 
 .big-logo {
 
@@ -303,26 +251,19 @@ button {
     box-shadow:
         0 0 40px
         rgba(118,87,255,0.3);
-
 }
-
 
 .welcome h2 {
 
     font-size: 27px;
 
     margin-bottom: 8px;
-
 }
-
 
 .welcome p {
 
-    color:
-        var(--muted);
-
+    color: var(--muted);
 }
-
 
 .suggestions {
 
@@ -331,9 +272,7 @@ button {
     gap: 10px;
 
     margin-top: 25px;
-
 }
-
 
 .suggestion {
 
@@ -342,18 +281,14 @@ button {
 
     border-radius: 16px;
 
-    background:
-        var(--panel);
+    background: var(--panel);
 
-    color:
-        white;
+    color: white;
 
     border:
         1px solid var(--border);
 
-    text-align:
-        left;
-
+    text-align: left;
 }
 
 
@@ -366,74 +301,49 @@ button {
     display: flex;
 
     margin-bottom: 14px;
-
 }
-
 
 .message.user {
-
-    justify-content:
-        flex-end;
-
+    justify-content: flex-end;
 }
-
 
 .message.ai {
-
-    justify-content:
-        flex-start;
-
+    justify-content: flex-start;
 }
-
 
 .bubble {
 
-    max-width:
-        84%;
+    max-width: 84%;
 
     padding:
         12px 15px;
 
-    border-radius:
-        18px;
+    border-radius: 18px;
 
-    line-height:
-        1.45;
+    line-height: 1.45;
 
-    font-size:
-        15px;
+    font-size: 15px;
 
-    white-space:
-        pre-wrap;
+    white-space: pre-wrap;
 
-    overflow-wrap:
-        anywhere;
-
+    overflow-wrap: anywhere;
 }
-
 
 .user .bubble {
 
-    background:
-        var(--accent);
+    background: var(--accent);
 
-    border-bottom-right-radius:
-        6px;
-
+    border-bottom-right-radius: 6px;
 }
-
 
 .ai .bubble {
 
-    background:
-        var(--panel2);
+    background: var(--panel2);
 
     border:
         1px solid var(--border);
 
-    border-bottom-left-radius:
-        6px;
-
+    border-bottom-left-radius: 6px;
 }
 
 
@@ -449,16 +359,11 @@ button {
 
     padding:
         0 20px 10px;
-
 }
-
 
 .typing.active {
-
     display: flex;
-
 }
-
 
 .typing span {
 
@@ -471,25 +376,15 @@ button {
 
     animation:
         typing 1s infinite;
-
 }
-
 
 .typing span:nth-child(2) {
-
-    animation-delay:
-        0.15s;
-
+    animation-delay: 0.15s;
 }
-
 
 .typing span:nth-child(3) {
-
-    animation-delay:
-        0.3s;
-
+    animation-delay: 0.3s;
 }
-
 
 @keyframes typing {
 
@@ -497,24 +392,19 @@ button {
     60%,
     100% {
 
-        opacity:
-            0.25;
+        opacity: 0.25;
 
         transform:
             translateY(0);
-
     }
 
     30% {
 
-        opacity:
-            1;
+        opacity: 1;
 
         transform:
             translateY(-4px);
-
     }
-
 }
 
 
@@ -544,9 +434,7 @@ button {
 
     backdrop-filter:
         blur(20px);
-
 }
-
 
 .mic {
 
@@ -557,54 +445,75 @@ button {
 
     border-radius: 50%;
 
-    background:
-        var(--panel2);
+    background: var(--panel2);
 
-    color:
-        white;
+    color: white;
 
     border:
         1px solid var(--border);
 
     font-size: 20px;
 
+    transition:
+        transform 0.15s,
+        background 0.15s;
 }
 
+.mic:active {
+
+    transform:
+        scale(0.92);
+}
 
 .mic.listening {
 
-    background:
-        #d84747;
+    background: var(--red);
 
+    animation:
+        pulse 1.2s infinite;
 }
 
+@keyframes pulse {
+
+    0% {
+        box-shadow:
+            0 0 0 0
+            rgba(255,87,87,0.5);
+    }
+
+    70% {
+        box-shadow:
+            0 0 0 12px
+            rgba(255,87,87,0);
+    }
+
+    100% {
+        box-shadow:
+            0 0 0 0
+            rgba(255,87,87,0);
+    }
+}
 
 .input-box {
 
     flex: 1;
 
-    min-height:
-        49px;
+    min-height: 49px;
 
     display: flex;
 
-    align-items:
-        flex-end;
+    align-items: flex-end;
 
     padding:
         5px 6px 5px 14px;
 
-    border-radius:
-        25px;
+    border-radius: 25px;
 
-    background:
-        var(--panel);
+    background: var(--panel);
 
     border:
         1px solid var(--border);
-
 }
-
 
 textarea {
 
@@ -612,8 +521,7 @@ textarea {
 
     resize: none;
 
-    max-height:
-        110px;
+    max-height: 110px;
 
     padding:
         8px 4px;
@@ -622,14 +530,10 @@ textarea {
 
     border: 0;
 
-    background:
-        transparent;
+    background: transparent;
 
-    color:
-        white;
-
+    color: white;
 }
-
 
 .send {
 
@@ -638,14 +542,56 @@ textarea {
 
     border-radius: 50%;
 
-    background:
-        var(--accent);
+    background: var(--accent);
 
-    color:
-        white;
+    color: white;
 
     font-size: 17px;
+}
 
+
+/* =====================================================
+   MODE VOCAL
+===================================================== */
+
+.voice-indicator {
+
+    display: none;
+
+    position: fixed;
+
+    left: 50%;
+
+    bottom:
+        calc(
+            85px +
+            env(safe-area-inset-bottom)
+        );
+
+    transform:
+        translateX(-50%);
+
+    padding:
+        10px 18px;
+
+    border-radius: 20px;
+
+    background:
+        rgba(118,87,255,0.95);
+
+    color: white;
+
+    font-size: 13px;
+
+    box-shadow:
+        0 10px 30px
+        rgba(0,0,0,0.3);
+
+    z-index: 20;
+}
+
+.voice-indicator.active {
+    display: block;
 }
 
 </style>
@@ -654,7 +600,6 @@ textarea {
 
 
 <body>
-
 
 <div class="app">
 
@@ -689,6 +634,7 @@ textarea {
         id="clear"
         class="clear"
         type="button"
+        aria-label="Effacer"
     >
         🗑️
     </button>
@@ -711,11 +657,9 @@ textarea {
         ✦
     </div>
 
-
     <h2>
         Salut Asdrick 👋
     </h2>
-
 
     <p>
         Ton assistant personnel.
@@ -767,6 +711,14 @@ textarea {
 </div>
 
 
+<div
+    id="voiceIndicator"
+    class="voice-indicator"
+>
+    🎙️ Je t'écoute...
+</div>
+
+
 <footer class="input-area">
 
 
@@ -774,6 +726,7 @@ textarea {
     id="mic"
     class="mic"
     type="button"
+    aria-label="Microphone"
 >
     🎙️
 </button>
@@ -784,7 +737,7 @@ textarea {
 <textarea
     id="input"
     rows="1"
-    placeholder="Écris un message..."
+    placeholder="Écris ou parle..."
 ></textarea>
 
 
@@ -792,12 +745,12 @@ textarea {
     id="send"
     class="send"
     type="button"
+    aria-label="Envoyer"
 >
     ➤
 </button>
 
 </div>
-
 
 </footer>
 
@@ -818,11 +771,6 @@ const API_URL =
     "https://asdrick-ia.onrender.com";
 
 
-/*
- * Noms EXACTS des raccourcis installés
- * sur ton iPhone.
- */
-
 const SHORTCUTS = {
 
     open_youtube:
@@ -841,7 +789,13 @@ const SHORTCUTS = {
         "Asdrick Netflix",
 
     open_revolut:
-        "Asdrick Revolut"
+        "Asdrick Revolut",
+
+    open_timer:
+        "Asdrick Minuteur",
+
+    open_alarm:
+        "Asdrick Alarme"
 
 };
 
@@ -851,54 +805,44 @@ const SHORTCUTS = {
 ===================================================== */
 
 const chat =
-    document.getElementById(
-        "chat"
-    );
+    document.getElementById("chat");
 
 const welcome =
-    document.getElementById(
-        "welcome"
-    );
+    document.getElementById("welcome");
 
 const input =
-    document.getElementById(
-        "input"
-    );
+    document.getElementById("input");
 
 const send =
-    document.getElementById(
-        "send"
-    );
+    document.getElementById("send");
 
 const mic =
-    document.getElementById(
-        "mic"
-    );
+    document.getElementById("mic");
 
 const clear =
-    document.getElementById(
-        "clear"
-    );
+    document.getElementById("clear");
 
 const typing =
-    document.getElementById(
-        "typing"
-    );
+    document.getElementById("typing");
 
 const status =
+    document.getElementById("status");
+
+const voiceIndicator =
     document.getElementById(
-        "status"
+        "voiceIndicator"
     );
 
 
-let sending =
-    false;
+let sending = false;
 
-let recognition =
-    null;
+let recognition = null;
 
-let listening =
-    false;
+let listening = false;
+
+let speaking = false;
+
+let currentUtterance = null;
 
 
 /* =====================================================
@@ -949,26 +893,22 @@ function saveMessage(
 
             type,
             text,
-            date:
-                Date.now()
+            date: Date.now()
 
         });
 
 
         localStorage.setItem(
-
             "asdrick_history",
-
             JSON.stringify(
                 history.slice(-50)
             )
-
         );
 
     } catch (error) {
 
         console.error(
-            "Mémoire :",
+            "Erreur mémoire :",
             error
         );
 
@@ -978,7 +918,7 @@ function saveMessage(
 
 
 /* =====================================================
-   CHARGER HISTORIQUE
+   HISTORIQUE → CHAT
 ===================================================== */
 
 function loadHistory() {
@@ -987,12 +927,8 @@ function loadHistory() {
         getHistory();
 
 
-    if (
-        history.length === 0
-    ) {
-
+    if (!history.length) {
         return;
-
     }
 
 
@@ -1010,9 +946,7 @@ function loadHistory() {
                     item.type !== "ai"
                 )
             ) {
-
                 return;
-
             }
 
 
@@ -1028,7 +962,7 @@ function loadHistory() {
 
 
 /* =====================================================
-   AFFICHAGE
+   MESSAGE
 ===================================================== */
 
 function addMessage(
@@ -1037,20 +971,15 @@ function addMessage(
 ) {
 
     const row =
-        document.createElement(
-            "div"
-        );
+        document.createElement("div");
 
 
     row.className =
-        "message " +
-        type;
+        "message " + type;
 
 
     const bubble =
-        document.createElement(
-            "div"
-        );
+        document.createElement("div");
 
 
     bubble.className =
@@ -1078,7 +1007,60 @@ function addMessage(
 
 
 /* =====================================================
-   ENVOYER MESSAGE
+   ACTIONS IPHONE
+===================================================== */
+
+function executeAction(
+    action,
+    url = null
+) {
+
+    if (action === "open_website") {
+
+        if (!url) {
+            return;
+        }
+
+
+        window.location.href =
+            url;
+
+        return;
+
+    }
+
+
+    const shortcutName =
+        SHORTCUTS[action];
+
+
+    if (!shortcutName) {
+
+        console.warn(
+            "Action inconnue :",
+            action
+        );
+
+        return;
+
+    }
+
+
+    const shortcutURL =
+        "shortcuts://run-shortcut?name=" +
+        encodeURIComponent(
+            shortcutName
+        );
+
+
+    window.location.href =
+        shortcutURL;
+
+}
+
+
+/* =====================================================
+   ENVOI
 ===================================================== */
 
 async function sendMessage() {
@@ -1097,12 +1079,13 @@ async function sendMessage() {
     }
 
 
-    sending =
-        true;
+    sending = true;
 
 
-    input.value =
-        "";
+    input.value = "";
+
+
+    stopSpeaking();
 
 
     welcome.style.display =
@@ -1115,49 +1098,31 @@ async function sendMessage() {
     );
 
 
-    /*
-     * L'historique est récupéré
-     * AVANT de sauvegarder le message actuel.
-     */
-
-    const oldHistory =
-        getHistory();
-
-
     const history =
-        oldHistory
-            .filter(item => {
+        getHistory()
 
-                return (
+            .filter(item =>
+                item &&
+                (
+                    item.type === "user" ||
+                    item.type === "ai"
+                ) &&
+                typeof item.text === "string"
+            )
 
-                    item &&
-
-                    (
-                        item.type === "user" ||
-                        item.type === "ai"
-                    ) &&
-
-                    typeof item.text === "string"
-
-                );
-
-            })
             .slice(-20)
-            .map(item => {
 
-                return {
+            .map(item => ({
 
-                    role:
-                        item.type === "user"
-                            ? "user"
-                            : "assistant",
+                role:
+                    item.type === "user"
+                        ? "user"
+                        : "assistant",
 
-                    content:
-                        item.text
+                content:
+                    item.text
 
-                };
-
-            });
+            }));
 
 
     saveMessage(
@@ -1166,9 +1131,7 @@ async function sendMessage() {
     );
 
 
-    setThinking(
-        true
-    );
+    setThinking(true);
 
 
     try {
@@ -1179,14 +1142,11 @@ async function sendMessage() {
                 "/api/chat",
                 {
 
-                    method:
-                        "POST",
+                    method: "POST",
 
                     headers: {
-
                         "Content-Type":
                             "application/json"
-
                     },
 
                     body:
@@ -1222,7 +1182,7 @@ async function sendMessage() {
         ) {
 
             throw new Error(
-                "Réponse invalide."
+                "Réponse invalide"
             );
 
         }
@@ -1240,14 +1200,19 @@ async function sendMessage() {
         );
 
 
+        setThinking(false);
+
+
         /*
-         * Exécution de l'action
+         * L'action est lancée après
+         * l'affichage de la réponse.
          */
 
         if (data.action) {
 
             executeAction(
-                data.action
+                data.action,
+                data.url
             );
 
         }
@@ -1261,7 +1226,7 @@ async function sendMessage() {
     } catch (error) {
 
         console.error(
-            "❌ API :",
+            "Erreur API :",
             error
         );
 
@@ -1279,15 +1244,10 @@ async function sendMessage() {
         status.className =
             "status error";
 
+
     } finally {
 
-        sending =
-            false;
-
-
-        setThinking(
-            false
-        );
+        sending = false;
 
     }
 
@@ -1295,74 +1255,456 @@ async function sendMessage() {
 
 
 /* =====================================================
-   ACTIONS IPHONE
+   VOIX
 ===================================================== */
 
-function executeAction(
-    action
+function cleanTextForVoice(
+    text
 ) {
 
-    const shortcutName =
-        SHORTCUTS[action];
+    if (!text) {
+        return "";
+    }
 
 
-    if (!shortcutName) {
+    return String(text)
 
-        console.warn(
-            "Action inconnue :",
-            action
+        .replace(
+            /[\u{1F300}-\u{1FAFF}]/gu,
+            ""
+        )
+
+        .replace(
+            /[*_`#]/g,
+            ""
+        )
+
+        .replace(
+            /\s+/g,
+            " "
+        )
+
+        .trim();
+
+}
+
+
+function getFrenchVoice() {
+
+    if (
+        !("speechSynthesis" in window)
+    ) {
+
+        return null;
+
+    }
+
+
+    const voices =
+        speechSynthesis.getVoices();
+
+
+    if (!voices.length) {
+        return null;
+    }
+
+
+    const french =
+        voices.filter(
+            voice =>
+                voice.lang &&
+                voice.lang
+                    .toLowerCase()
+                    .startsWith("fr")
         );
+
+
+    if (!french.length) {
+        return null;
+    }
+
+
+    const preferred =
+        french.find(
+            voice =>
+                /premium|enhanced|natural|neural/i
+                    .test(voice.name)
+        );
+
+
+    return preferred ||
+        french[0];
+
+}
+
+
+function speak(
+    text
+) {
+
+    if (
+        !("speechSynthesis" in window)
+    ) {
 
         return;
 
     }
 
 
-    /*
-     * Lancement du raccourci Apple.
-     */
+    const clean =
+        cleanTextForVoice(text);
 
-    const url =
-        "shortcuts://run-shortcut?name=" +
-        encodeURIComponent(
-            shortcutName
+
+    if (!clean) {
+        return;
+    }
+
+
+    speechSynthesis.cancel();
+
+
+    currentUtterance =
+        new SpeechSynthesisUtterance(
+            clean
         );
 
 
-    console.log(
-        "📱 Lancement :",
-        shortcutName
+    currentUtterance.lang =
+        "fr-FR";
+
+
+    currentUtterance.rate =
+        0.96;
+
+
+    currentUtterance.pitch =
+        1;
+
+
+    currentUtterance.volume =
+        1;
+
+
+    const voice =
+        getFrenchVoice();
+
+
+    if (voice) {
+
+        currentUtterance.voice =
+            voice;
+
+    }
+
+
+    currentUtterance.onstart =
+        () => {
+
+            speaking = true;
+
+            status.textContent =
+                "● Je parle...";
+
+            status.className =
+                "status thinking";
+
+        };
+
+
+    currentUtterance.onend =
+        () => {
+
+            speaking = false;
+
+            currentUtterance = null;
+
+            status.textContent =
+                "● En ligne";
+
+            status.className =
+                "status";
+
+        };
+
+
+    currentUtterance.onerror =
+        error => {
+
+            console.error(
+                "Erreur voix :",
+                error
+            );
+
+            speaking = false;
+
+            currentUtterance = null;
+
+            status.textContent =
+                "● En ligne";
+
+            status.className =
+                "status";
+
+        };
+
+
+    speechSynthesis.speak(
+        currentUtterance
     );
 
+}
 
-    window.location.href =
-        url;
+
+function stopSpeaking() {
+
+    if (
+        "speechSynthesis" in window
+    ) {
+
+        speechSynthesis.cancel();
+
+    }
+
+
+    speaking = false;
+
+    currentUtterance = null;
 
 }
 
 
 /* =====================================================
-   ENVOI
+   MICROPHONE
 ===================================================== */
 
-send.addEventListener(
+function setupVoice() {
+
+    const SpeechRecognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+
+    if (!SpeechRecognition) {
+
+        mic.disabled = true;
+
+        mic.style.opacity = "0.4";
+
+        status.textContent =
+            "● Micro indisponible";
+
+        return;
+
+    }
+
+
+    recognition =
+        new SpeechRecognition();
+
+
+    recognition.lang =
+        "fr-FR";
+
+
+    recognition.continuous =
+        false;
+
+
+    recognition.interimResults =
+        false;
+
+
+    recognition.maxAlternatives =
+        1;
+
+
+    recognition.onstart =
+        () => {
+
+            listening = true;
+
+
+            stopSpeaking();
+
+
+            mic.classList.add(
+                "listening"
+            );
+
+
+            voiceIndicator.classList.add(
+                "active"
+            );
+
+
+            status.textContent =
+                "● Je t'écoute...";
+
+
+            status.className =
+                "status thinking";
+
+        };
+
+
+    recognition.onresult =
+        event => {
+
+            try {
+
+                const result =
+                    event
+                        .results[0][0]
+                        .transcript
+                        .trim();
+
+
+                if (!result) {
+                    return;
+                }
+
+
+                input.value =
+                    result;
+
+
+                sendMessage();
+
+            } catch (error) {
+
+                console.error(
+                    "Résultat vocal :",
+                    error
+                );
+
+            }
+
+        };
+
+
+    recognition.onerror =
+        error => {
+
+            console.error(
+                "Erreur micro :",
+                error
+            );
+
+
+            stopListening();
+
+
+            if (
+                error.error ===
+                "not-allowed"
+            ) {
+
+                addMessage(
+                    "ai",
+                    "🎙️ L'accès au micro est refusé. Autorise le microphone dans les réglages du navigateur."
+                );
+
+            }
+
+        };
+
+
+    recognition.onend =
+        () => {
+
+            stopListening();
+
+        };
+
+}
+
+
+function startListening() {
+
+    if (
+        !recognition ||
+        listening
+    ) {
+
+        return;
+
+    }
+
+
+    stopSpeaking();
+
+
+    try {
+
+        recognition.start();
+
+    } catch (error) {
+
+        console.error(
+            "Démarrage micro :",
+            error
+        );
+
+    }
+
+}
+
+
+function stopListening() {
+
+    listening = false;
+
+
+    mic.classList.remove(
+        "listening"
+    );
+
+
+    voiceIndicator.classList.remove(
+        "active"
+    );
+
+
+    if (!sending) {
+
+        status.textContent =
+            "● En ligne";
+
+        status.className =
+            "status";
+
+    }
+
+}
+
+
+mic.addEventListener(
     "click",
-    sendMessage
-);
+    () => {
+
+        if (!recognition) {
+
+            addMessage(
+                "ai",
+                "🎙️ La reconnaissance vocale n'est pas disponible dans ce navigateur."
+            );
+
+            return;
+
+        }
 
 
-input.addEventListener(
-    "keydown",
-    event => {
+        if (listening) {
 
-        if (
-            event.key === "Enter" &&
-            !event.shiftKey
-        ) {
+            try {
 
-            event.preventDefault();
+                recognition.stop();
 
-            sendMessage();
+            } catch {}
+
+        } else {
+
+            startListening();
 
         }
 
@@ -1398,281 +1740,21 @@ document
 
 
 /* =====================================================
-   THINKING
+   ENTER
 ===================================================== */
 
-function setThinking(
-    active
-) {
+input.addEventListener(
+    "keydown",
+    event => {
 
-    if (active) {
+        if (
+            event.key === "Enter" &&
+            !event.shiftKey
+        ) {
 
-        typing.classList.add(
-            "active"
-        );
+            event.preventDefault();
 
-
-        status.textContent =
-            "● Réflexion...";
-
-
-        status.className =
-            "status thinking";
-
-    } else {
-
-        typing.classList.remove(
-            "active"
-        );
-
-
-        status.textContent =
-            "● En ligne";
-
-
-        status.className =
-            "status";
-
-    }
-
-}
-
-
-/* =====================================================
-   VOIX
-===================================================== */
-
-function speak(
-    text
-) {
-
-    if (
-        !("speechSynthesis" in window)
-    ) {
-
-        return;
-
-    }
-
-
-    try {
-
-        speechSynthesis.cancel();
-
-
-        const voice =
-            new SpeechSynthesisUtterance(
-                text
-            );
-
-
-        voice.lang =
-            "fr-FR";
-
-
-        voice.rate =
-            1;
-
-
-        speechSynthesis.speak(
-            voice
-        );
-
-    } catch (error) {
-
-        console.error(
-            "Voix :",
-            error
-        );
-
-    }
-
-}
-
-
-/* =====================================================
-   MICRO
-===================================================== */
-
-function setupVoice() {
-
-    const SpeechRecognition =
-        window.SpeechRecognition ||
-        window.webkitSpeechRecognition;
-
-
-    if (!SpeechRecognition) {
-
-        mic.disabled =
-            true;
-
-        mic.style.opacity =
-            "0.4";
-
-        return;
-
-    }
-
-
-    recognition =
-        new SpeechRecognition();
-
-
-    recognition.lang =
-        "fr-FR";
-
-
-    recognition.continuous =
-        false;
-
-
-    recognition.interimResults =
-        false;
-
-
-    recognition.onstart =
-        () => {
-
-            listening =
-                true;
-
-            mic.classList.add(
-                "listening"
-            );
-
-            status.textContent =
-                "● J'écoute...";
-
-        };
-
-
-    recognition.onresult =
-        event => {
-
-            try {
-
-                const result =
-                    event
-                        .results[0][0]
-                        .transcript;
-
-
-                input.value =
-                    result;
-
-
-                stopListening();
-
-
-                sendMessage();
-
-            } catch (error) {
-
-                console.error(
-                    "Micro :",
-                    error
-                );
-
-            }
-
-        };
-
-
-    recognition.onerror =
-        error => {
-
-            console.error(
-                "Micro :",
-                error
-            );
-
-            stopListening();
-
-        };
-
-
-    recognition.onend =
-        () => {
-
-            stopListening();
-
-        };
-
-}
-
-
-function startListening() {
-
-    if (
-        !recognition ||
-        listening
-    ) {
-
-        return;
-
-    }
-
-
-    try {
-
-        recognition.start();
-
-    } catch (error) {
-
-        console.error(
-            "Micro :",
-            error
-        );
-
-    }
-
-}
-
-
-function stopListening() {
-
-    listening =
-        false;
-
-
-    mic.classList.remove(
-        "listening"
-    );
-
-
-    status.textContent =
-        "● En ligne";
-
-}
-
-
-mic.addEventListener(
-    "click",
-    () => {
-
-        if (!recognition) {
-
-            addMessage(
-                "ai",
-                "🎙️ La reconnaissance vocale n'est pas disponible."
-            );
-
-            return;
-
-        }
-
-
-        if (listening) {
-
-            try {
-
-                recognition.stop();
-
-            } catch {}
-
-        } else {
-
-            startListening();
+            sendMessage();
 
         }
 
@@ -1706,21 +1788,75 @@ clear.addEventListener(
         welcome.style.display =
             "block";
 
+
+        stopSpeaking();
+
     }
 );
 
 
 /* =====================================================
-   START
+   ÉTAT
+===================================================== */
+
+function setThinking(
+    active
+) {
+
+    if (active) {
+
+        typing.classList.add(
+            "active"
+        );
+
+
+        status.textContent =
+            "● Je réfléchis...";
+
+
+        status.className =
+            "status thinking";
+
+    } else {
+
+        typing.classList.remove(
+            "active"
+        );
+
+        status.textContent =
+            "● En ligne";
+
+        status.className =
+            "status";
+
+    }
+
+}
+
+
+/* =====================================================
+   INITIALISATION
 ===================================================== */
 
 loadHistory();
 
 setupVoice();
 
+
+if (
+    "speechSynthesis" in window
+) {
+
+    speechSynthesis.onvoiceschanged =
+        () => {
+
+            getFrenchVoice();
+
+        };
+
+}
+
 </script>
 
-
 </body>
-
 </html>
