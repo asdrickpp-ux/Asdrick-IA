@@ -4,13 +4,10 @@ const OpenAI = require("openai");
 const app = express();
 
 const PORT = process.env.PORT || 3000;
-
 const apiKey = process.env.OPENAI_API_KEY;
 
 const client = apiKey
-    ? new OpenAI({
-        apiKey: apiKey
-    })
+    ? new OpenAI({ apiKey })
     : null;
 
 
@@ -20,16 +17,11 @@ const client = apiKey
 
 app.use((req, res, next) => {
 
-    res.header(
-        "Access-Control-Allow-Origin",
-        "*"
-    );
-
+    res.header("Access-Control-Allow-Origin", "*");
     res.header(
         "Access-Control-Allow-Methods",
         "GET,POST,OPTIONS"
     );
-
     res.header(
         "Access-Control-Allow-Headers",
         "Content-Type"
@@ -55,7 +47,7 @@ app.use(
 
 
 /* =====================================================
-   TEST DU SERVEUR
+   STATUS
 ===================================================== */
 
 app.get("/", (req, res) => {
@@ -63,7 +55,7 @@ app.get("/", (req, res) => {
     res.json({
         status: "online",
         assistant: "Asdrick AI",
-        version: "2.0",
+        version: "3.1",
         ai: client
             ? "connected"
             : "missing_api_key"
@@ -84,8 +76,7 @@ app.post("/api/chat", async (req, res) => {
 
             return res.status(500).json({
                 success: false,
-                error:
-                    "OPENAI_API_KEY est absente de Render."
+                error: "OPENAI_API_KEY manquante."
             });
 
         }
@@ -107,20 +98,11 @@ app.post("/api/chat", async (req, res) => {
         }
 
 
-        /*
-         * Historique envoyé par l'iPhone
-         */
-
         const receivedHistory =
             Array.isArray(req.body?.history)
                 ? req.body.history
                 : [];
 
-
-        /*
-         * Nettoyage et limitation
-         * de l'historique.
-         */
 
         const history =
             receivedHistory
@@ -133,16 +115,12 @@ app.post("/api/chat", async (req, res) => {
                             item.role === "assistant"
                         ) &&
                         typeof item.content === "string" &&
-                        item.content.trim().length > 0
+                        item.content.trim()
                     );
 
                 })
                 .slice(-20);
 
-
-        /*
-         * Construction de la conversation.
-         */
 
         const conversation = [
             ...history,
@@ -153,59 +131,110 @@ app.post("/api/chat", async (req, res) => {
         ];
 
 
-        console.log(
-            "📩 Message reçu :",
-            message
-        );
-
-
-        /*
-         * Appel au modèle IA
-         */
-
         const response =
             await client.responses.create({
 
                 model: "gpt-5-mini",
 
                 instructions: `
-Tu es Asdrick AI, l'assistant personnel d'Asdrick.
 
-LANGUE :
-Réponds en français par défaut.
-Si l'utilisateur parle une autre langue,
-réponds dans cette langue.
+Tu es Asdrick AI, l'assistant personnel
+d'Asdrick.
 
-PERSONNALITÉ :
-- naturel
-- intelligent
-- direct
-- chaleureux
-- détendu
-- parfois humoristique
-- jamais inutilement long
-- explique clairement les choses complexes
+Tu réponds en français par défaut.
 
-COMPORTEMENT :
-- utilise le contexte de la conversation
-- ne demande pas à l'utilisateur de répéter
-  quelque chose déjà présent dans l'historique
-- répond directement aux questions
-- reconnais clairement tes limites
-- ne mens jamais sur tes capacités
-- ne prétends jamais avoir contrôlé l'iPhone
-  si aucune fonction de contrôle n'est disponible
-- ne prétends jamais avoir effectué une action
-  que tu n'as pas réellement effectuée
+Tu es naturel, intelligent, direct,
+chaleureux et parfois humoristique.
 
-CONTEXTE :
-Les messages précédents fournis dans "input"
-font partie de la conversation actuelle.
-Utilise-les pour comprendre les messages
-suivants.
+Tu utilises l'historique fourni pour
+comprendre le contexte.
 
-Tu es l'intelligence conversationnelle
-derrière l'application appelée "Asdrick AI".
+==================================================
+ACTIONS DISPONIBLES
+==================================================
+
+Tu peux demander UNE SEULE action
+par réponse.
+
+Actions disponibles :
+
+open_youtube
+open_tiktok
+open_messages
+open_amazon
+open_netflix
+open_revolut
+
+==================================================
+RÈGLES DES ACTIONS
+==================================================
+
+Si l'utilisateur demande clairement
+d'ouvrir YouTube :
+
+ACTION:open_youtube
+
+Si l'utilisateur demande clairement
+d'ouvrir TikTok :
+
+ACTION:open_tiktok
+
+Si l'utilisateur demande clairement
+d'ouvrir Messages :
+
+ACTION:open_messages
+
+Si l'utilisateur demande clairement
+d'ouvrir Amazon :
+
+ACTION:open_amazon
+
+Si l'utilisateur demande clairement
+d'ouvrir Netflix :
+
+ACTION:open_netflix
+
+Si l'utilisateur demande clairement
+d'ouvrir Revolut :
+
+ACTION:open_revolut
+
+==================================================
+IMPORTANT
+==================================================
+
+Si aucune action n'est nécessaire,
+réponds normalement.
+
+Si une action est nécessaire,
+tu peux expliquer brièvement ce que
+tu vas faire puis termine exactement
+par la commande d'action.
+
+Exemple :
+
+Je t'ouvre TikTok.
+
+ACTION:open_tiktok
+
+Ne crée jamais une action qui n'existe
+pas dans la liste.
+
+Ne prétends jamais avoir exécuté une
+action si aucune action n'a été déclenchée.
+
+==================================================
+SÉCURITÉ
+==================================================
+
+L'action Revolut ne permet ici que
+d'ouvrir l'application.
+
+Tu ne dois jamais prétendre pouvoir
+effectuer un paiement, un virement,
+modifier un compte bancaire ou lire
+des informations privées.
+
 `,
 
                 input: conversation
@@ -213,23 +242,58 @@ derrière l'application appelée "Asdrick AI".
             });
 
 
-        const reply =
-            typeof response.output_text === "string" &&
-            response.output_text.trim().length > 0
+        let reply =
+            typeof response.output_text === "string"
                 ? response.output_text.trim()
-                : "Je n'ai pas réussi à générer une réponse.";
+                : "";
 
 
-        console.log(
-            "🤖 Réponse générée."
-        );
+        if (!reply) {
+
+            reply =
+                "Je n'ai pas réussi à générer une réponse.";
+
+        }
+
+
+        let action = null;
+
+
+        const actionMatch =
+            reply.match(
+                /ACTION:(open_youtube|open_tiktok|open_messages|open_amazon|open_netflix|open_revolut)/
+            );
+
+
+        if (actionMatch) {
+
+            action =
+                actionMatch[1];
+
+        }
+
+
+        /*
+         * Supprime la commande technique
+         * de la réponse affichée à l'utilisateur.
+         */
+
+        reply =
+            reply
+                .replace(
+                    /ACTION:(open_youtube|open_tiktok|open_messages|open_amazon|open_netflix|open_revolut)/g,
+                    ""
+                )
+                .trim();
 
 
         return res.json({
 
             success: true,
 
-            reply: reply
+            reply,
+
+            action
 
         });
 
@@ -237,7 +301,7 @@ derrière l'application appelée "Asdrick AI".
     } catch (error) {
 
         console.error(
-            "❌ ERREUR OPENAI :",
+            "❌ ERREUR IA :",
             error
         );
 
@@ -247,7 +311,7 @@ derrière l'application appelée "Asdrick AI".
             success: false,
 
             error:
-                "Une erreur est survenue avec le modèle IA."
+                "Erreur lors de la communication avec l'IA."
 
         });
 
@@ -257,7 +321,7 @@ derrière l'application appelée "Asdrick AI".
 
 
 /* =====================================================
-   DÉMARRAGE
+   START
 ===================================================== */
 
 app.listen(
@@ -266,7 +330,7 @@ app.listen(
     () => {
 
         console.log(
-            `🚀 Asdrick AI V2 lancé sur le port ${PORT}`
+            `🚀 Asdrick AI V3.1 lancé sur le port ${PORT}`
         );
 
     }
