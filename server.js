@@ -1,13 +1,31 @@
 const express = require("express");
+const OpenAI = require("openai");
 
 const app = express();
 
 const PORT = process.env.PORT || 3000;
 
 
-/* =========================
+/* =====================================================
+   OPENAI
+===================================================== */
+
+const apiKey = process.env.OPENAI_API_KEY;
+
+if (!apiKey) {
+    console.error("❌ OPENAI_API_KEY est absente.");
+}
+
+const client = apiKey
+    ? new OpenAI({
+        apiKey: apiKey
+    })
+    : null;
+
+
+/* =====================================================
    CORS
-========================= */
+===================================================== */
 
 app.use((req, res, next) => {
 
@@ -35,37 +53,50 @@ app.use((req, res, next) => {
 });
 
 
-/* =========================
+/* =====================================================
    JSON
-========================= */
+===================================================== */
 
 app.use(
-    express.json()
+    express.json({
+        limit: "1mb"
+    })
 );
 
 
-/* =========================
-   TEST SERVEUR
-========================= */
+/* =====================================================
+   PAGE TEST
+===================================================== */
 
 app.get("/", (req, res) => {
 
     res.json({
         status: "online",
         assistant: "Asdrick AI",
-        version: "0.2"
+        version: "1.0",
+        ai: client ? "connected" : "missing_api_key"
     });
 
 });
 
 
-/* =========================
-   CHAT
-========================= */
+/* =====================================================
+   CHAT IA
+===================================================== */
 
 app.post("/api/chat", async (req, res) => {
 
     try {
+
+        if (!client) {
+
+            return res.status(500).json({
+                success: false,
+                error: "La clé API OpenAI n'est pas configurée sur Render."
+            });
+
+        }
+
 
         const message =
             typeof req.body?.message === "string"
@@ -76,33 +107,63 @@ app.post("/api/chat", async (req, res) => {
         if (!message) {
 
             return res.status(400).json({
-                error: "Message manquant"
+                success: false,
+                error: "Message manquant."
             });
 
         }
 
 
         console.log(
-            "Message reçu :",
+            "📩 Message reçu :",
             message
         );
 
 
-        /*
-         * POUR L'INSTANT :
-         * réponse de test.
-         *
-         * Le vrai modèle IA sera connecté
-         * ici ensuite.
-         */
+        const response =
+            await client.responses.create({
+
+                model: "gpt-5-mini",
+
+                instructions: `
+Tu es Asdrick AI, l'assistant personnel d'Asdrick.
+
+Tu réponds en français par défaut.
+
+Ton style :
+- naturel
+- intelligent
+- direct
+- chaleureux
+- parfois humoristique
+- pas de réponses inutilement longues
+- tu expliques clairement les choses compliquées
+- tu ne prétends jamais avoir accès à l'iPhone si tu ne l'as pas réellement
+- tu ne prétends jamais avoir effectué une action que tu n'as pas effectuée
+
+Tu dois répondre directement à la demande de l'utilisateur.
+`,
+
+                input: message
+
+            });
+
+
+        const reply =
+            response.output_text ||
+            "Je n'ai pas réussi à générer une réponse.";
+
+
+        console.log(
+            "🤖 Réponse générée."
+        );
+
 
         return res.json({
 
             success: true,
 
-            reply:
-                "J'ai bien reçu ton message : " +
-                message
+            reply: reply
 
         });
 
@@ -110,7 +171,7 @@ app.post("/api/chat", async (req, res) => {
     } catch (error) {
 
         console.error(
-            "Erreur /api/chat :",
+            "❌ Erreur IA :",
             error
         );
 
@@ -120,7 +181,7 @@ app.post("/api/chat", async (req, res) => {
             success: false,
 
             error:
-                "Erreur interne du serveur"
+                "Une erreur est survenue lors de la communication avec l'IA."
 
         });
 
@@ -129,9 +190,9 @@ app.post("/api/chat", async (req, res) => {
 });
 
 
-/* =========================
-   DÉMARRAGE
-========================= */
+/* =====================================================
+   SERVEUR
+===================================================== */
 
 app.listen(
     PORT,
@@ -139,7 +200,7 @@ app.listen(
     () => {
 
         console.log(
-            `Asdrick AI démarré sur le port ${PORT}`
+            `🚀 Asdrick AI lancé sur le port ${PORT}`
         );
 
     }
