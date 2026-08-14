@@ -1,604 +1,591 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-  >
-
-  <meta name="theme-color" content="#08080c">
-
-  <meta
-    name="apple-mobile-web-app-capable"
-    content="yes"
-  >
-
-  <meta
-    name="apple-mobile-web-app-status-bar-style"
-    content="black-translucent"
-  >
-
-  <title>Asdrick AI</title>
-
-  <style>
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    :root {
-      --bg: #08080c;
-      --panel: #111116;
-      --panel2: #19191f;
-      --text: #ffffff;
-      --muted: #92929d;
-      --border: rgba(255,255,255,0.08);
-      --accent: #7657ff;
-      --success: #55df91;
-    }
-
-    html,
-    body {
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      background: var(--bg);
-      color: var(--text);
-
-      font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "SF Pro Display",
-        "Segoe UI",
-        sans-serif;
-    }
-
-    body {
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    button,
-    textarea {
-      font: inherit;
-    }
-
-    button {
-      border: 0;
-      cursor: pointer;
-    }
-
-    /* =========================
-       APPLICATION
-    ========================= */
-
-    .app {
-      width: 100%;
-      height: 100dvh;
-
-      display: flex;
-      flex-direction: column;
-
-      background:
-        radial-gradient(
-          circle at 50% -20%,
-          rgba(118,87,255,0.20),
-          transparent 42%
-        ),
-        var(--bg);
-    }
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
+
+    <meta name="theme-color" content="#08080c">
+
+    <meta
+        name="apple-mobile-web-app-capable"
+        content="yes"
+    >
+
+    <meta
+        name="apple-mobile-web-app-status-bar-style"
+        content="black-translucent"
+    >
+
+    <title>Asdrick AI</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg: #08080c;
+            --panel: #111116;
+            --panel2: #19191f;
+            --text: #ffffff;
+            --muted: #92929d;
+            --border: rgba(255,255,255,0.08);
+            --accent: #7657ff;
+            --success: #55df91;
+            --danger: #ff5757;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: var(--bg);
+            color: var(--text);
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "SF Pro Display",
+                "Segoe UI",
+                sans-serif;
+        }
+
+        body {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        button,
+        textarea {
+            font: inherit;
+        }
+
+        button {
+            border: 0;
+            cursor: pointer;
+            -webkit-appearance: none;
+        }
+
+        .app {
+            width: 100%;
+            height: 100dvh;
+
+            display: flex;
+            flex-direction: column;
+
+            background:
+                radial-gradient(
+                    circle at 50% -20%,
+                    rgba(118,87,255,0.20),
+                    transparent 42%
+                ),
+                var(--bg);
+        }
+
+        /* HEADER */
+
+        .topbar {
+            min-height: 74px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding:
+                calc(env(safe-area-inset-top) + 10px)
+                16px
+                10px
+                16px;
 
+            border-bottom: 1px solid var(--border);
 
-    /* =========================
-       HEADER
-    ========================= */
+            background: rgba(8,8,12,0.88);
 
-    .topbar {
-      min-height: 74px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
 
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
 
-      padding:
-        calc(env(safe-area-inset-top) + 10px)
-        16px
-        10px
-        16px;
+        .logo {
+            width: 43px;
+            height: 43px;
 
-      border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-      background: rgba(8,8,12,0.88);
+            border-radius: 14px;
 
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-    }
+            background:
+                linear-gradient(
+                    135deg,
+                    #7657ff,
+                    #b08cff
+                );
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
+            box-shadow:
+                0 0 30px rgba(118,87,255,0.35);
 
-    .logo {
-      width: 43px;
-      height: 43px;
+            font-size: 23px;
+            font-weight: bold;
+        }
 
-      display: flex;
-      align-items: center;
-      justify-content: center;
+        .brand h1 {
+            font-size: 17px;
+            font-weight: 700;
+        }
 
-      border-radius: 14px;
+        .status {
+            display: block;
 
-      background:
-        linear-gradient(
-          135deg,
-          #7657ff,
-          #b08cff
-        );
+            margin-top: 2px;
 
-      box-shadow:
-        0 0 30px rgba(118,87,255,0.35);
+            font-size: 11px;
+            color: var(--success);
 
-      font-size: 23px;
-      font-weight: bold;
-    }
+            transition: color 0.2s;
+        }
 
-    .brand h1 {
-      font-size: 17px;
-      font-weight: 700;
-    }
+        .status.listening {
+            color: #ff6b6b;
+        }
 
-    .status {
-      display: block;
+        .status.thinking {
+            color: #b08cff;
+        }
 
-      margin-top: 2px;
+        .status.error {
+            color: var(--danger);
+        }
 
-      font-size: 11px;
+        .clear-button {
+            width: 40px;
+            height: 40px;
 
-      color: var(--success);
-    }
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-    .status.listening {
-      color: #ff6b6b;
-    }
+            border-radius: 12px;
 
-    .status.thinking {
-      color: #b08cff;
-    }
+            background: var(--panel2);
+            color: white;
 
-    .clear-button {
-      width: 40px;
-      height: 40px;
+            border: 1px solid var(--border);
 
-      display: flex;
-      align-items: center;
-      justify-content: center;
+            font-size: 17px;
+        }
 
-      border-radius: 12px;
+        .clear-button:active {
+            transform: scale(0.94);
+        }
 
-      background: var(--panel2);
+        /* CHAT */
 
-      color: white;
+        .chat {
+            flex: 1;
 
-      border: 1px solid var(--border);
+            overflow-y: auto;
+            overflow-x: hidden;
 
-      font-size: 17px;
-    }
+            overscroll-behavior: contain;
+            -webkit-overflow-scrolling: touch;
 
+            padding: 24px 15px 20px;
 
-    /* =========================
-       CHAT
-    ========================= */
+            scroll-behavior: smooth;
+        }
 
-    .chat {
-      flex: 1;
+        .chat::-webkit-scrollbar {
+            display: none;
+        }
 
-      overflow-y: auto;
-      overscroll-behavior: contain;
+        /* WELCOME */
 
-      padding: 24px 15px 20px;
+        .welcome {
+            max-width: 520px;
 
-      scroll-behavior: smooth;
-    }
+            margin: 8vh auto 0;
 
-    .chat::-webkit-scrollbar {
-      display: none;
-    }
+            text-align: center;
+        }
 
+        .big-logo {
+            width: 76px;
+            height: 76px;
 
-    /* =========================
-       WELCOME
-    ========================= */
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-    .welcome {
-      max-width: 520px;
+            margin: 0 auto 20px;
 
-      margin: 8vh auto 0;
+            border-radius: 25px;
 
-      text-align: center;
-    }
+            background:
+                linear-gradient(
+                    135deg,
+                    #7657ff,
+                    #b08cff
+                );
 
-    .big-logo {
-      width: 76px;
-      height: 76px;
+            box-shadow:
+                0 0 40px rgba(118,87,255,0.28);
 
-      display: flex;
-      align-items: center;
-      justify-content: center;
+            font-size: 39px;
+            font-weight: bold;
+        }
 
-      margin: 0 auto 20px;
+        .welcome h2 {
+            font-size: 27px;
+            margin-bottom: 8px;
+        }
 
-      border-radius: 25px;
+        .welcome p {
+            color: var(--muted);
+            font-size: 15px;
+        }
 
-      background:
-        linear-gradient(
-          135deg,
-          #7657ff,
-          #b08cff
-        );
+        /* SUGGESTIONS */
 
-      box-shadow:
-        0 0 40px rgba(118,87,255,0.28);
+        .suggestions {
+            display: grid;
+            gap: 10px;
 
-      font-size: 39px;
-      font-weight: bold;
-    }
+            margin-top: 28px;
+        }
 
-    .welcome h2 {
-      font-size: 27px;
-      margin-bottom: 8px;
-    }
+        .suggestion {
+            padding: 14px 16px;
 
-    .welcome p {
-      color: var(--muted);
-      font-size: 15px;
-    }
+            border-radius: 16px;
 
+            background: var(--panel);
 
-    /* =========================
-       SUGGESTIONS
-    ========================= */
+            color: white;
 
-    .suggestions {
-      display: grid;
-      gap: 10px;
+            border: 1px solid var(--border);
 
-      margin-top: 28px;
-    }
+            text-align: left;
 
-    .suggestion {
-      padding: 14px 16px;
+            transition:
+                transform 0.15s,
+                background 0.15s;
+        }
 
-      border-radius: 16px;
+        .suggestion:active {
+            transform: scale(0.97);
+            background: var(--panel2);
+        }
 
-      background: var(--panel);
+        /* MESSAGES */
 
-      color: white;
+        .message {
+            display: flex;
+            margin-bottom: 14px;
+        }
 
-      border: 1px solid var(--border);
+        .message.user {
+            justify-content: flex-end;
+        }
 
-      text-align: left;
+        .message.ai {
+            justify-content: flex-start;
+        }
 
-      transition:
-        transform .15s,
-        background .15s;
-    }
+        .bubble {
+            max-width: 84%;
 
-    .suggestion:active {
-      transform: scale(.97);
-      background: var(--panel2);
-    }
+            padding: 12px 15px;
 
+            border-radius: 18px;
 
-    /* =========================
-       MESSAGES
-    ========================= */
+            font-size: 15px;
+            line-height: 1.45;
 
-    .message {
-      display: flex;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
 
-      margin-bottom: 14px;
-    }
+            animation: appear 0.18s ease;
+        }
 
-    .message.user {
-      justify-content: flex-end;
-    }
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
 
-    .message.ai {
-      justify-content: flex-start;
-    }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-    .bubble {
-      max-width: 84%;
+        .user .bubble {
+            background: var(--accent);
+            border-bottom-right-radius: 6px;
+        }
 
-      padding: 12px 15px;
+        .ai .bubble {
+            background: var(--panel2);
+            border: 1px solid var(--border);
+            border-bottom-left-radius: 6px;
+        }
 
-      border-radius: 18px;
+        /* TYPING */
 
-      font-size: 15px;
-      line-height: 1.45;
+        .typing {
+            display: none;
 
-      white-space: pre-wrap;
+            gap: 5px;
 
-      animation: appear .18s ease;
-    }
+            padding:
+                0
+                20px
+                10px;
+        }
 
-    @keyframes appear {
-      from {
-        opacity: 0;
-        transform: translateY(5px);
-      }
+        .typing.active {
+            display: flex;
+        }
 
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+        .typing span {
+            width: 6px;
+            height: 6px;
 
-    .user .bubble {
-      background: var(--accent);
+            border-radius: 50%;
 
-      border-bottom-right-radius: 6px;
-    }
+            background: #aaa;
 
-    .ai .bubble {
-      background: var(--panel2);
+            animation: typing 1s infinite;
+        }
 
-      border: 1px solid var(--border);
+        .typing span:nth-child(2) {
+            animation-delay: 0.15s;
+        }
 
-      border-bottom-left-radius: 6px;
-    }
+        .typing span:nth-child(3) {
+            animation-delay: 0.3s;
+        }
 
+        @keyframes typing {
+            0%,
+            60%,
+            100% {
+                opacity: 0.25;
+                transform: translateY(0);
+            }
 
-    /* =========================
-       TYPING
-    ========================= */
+            30% {
+                opacity: 1;
+                transform: translateY(-4px);
+            }
+        }
 
-    .typing {
-      display: none;
+        /* INPUT */
 
-      gap: 5px;
+        .input-area {
+            display: flex;
 
-      padding:
-        0
-        20px
-        10px;
-    }
+            gap: 9px;
 
-    .typing.active {
-      display: flex;
-    }
+            padding:
+                10px
+                13px
+                calc(12px + env(safe-area-inset-bottom))
+                13px;
 
-    .typing span {
-      width: 6px;
-      height: 6px;
+            border-top: 1px solid var(--border);
 
-      border-radius: 50%;
+            background: rgba(8,8,12,0.94);
 
-      background: #aaa;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
 
-      animation: typing 1s infinite;
-    }
+        .mic-button {
+            width: 49px;
+            min-width: 49px;
+            height: 49px;
 
-    .typing span:nth-child(2) {
-      animation-delay: .15s;
-    }
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-    .typing span:nth-child(3) {
-      animation-delay: .3s;
-    }
+            border-radius: 50%;
 
-    @keyframes typing {
+            background: var(--panel2);
 
-      0%,
-      60%,
-      100% {
-        opacity: .25;
-        transform: translateY(0);
-      }
+            color: white;
 
-      30% {
-        opacity: 1;
-        transform: translateY(-4px);
-      }
+            border: 1px solid var(--border);
 
-    }
+            font-size: 20px;
 
+            transition:
+                transform 0.15s,
+                background 0.15s;
+        }
 
-    /* =========================
-       INPUT
-    ========================= */
+        .mic-button:active {
+            transform: scale(0.94);
+        }
 
-    .input-area {
-      display: flex;
+        .mic-button.listening {
+            background: #d84747;
+            animation: pulse 1.2s infinite;
+        }
 
-      gap: 9px;
+        @keyframes pulse {
+            50% {
+                transform: scale(1.08);
+            }
+        }
 
-      padding:
-        10px
-        13px
-        calc(12px + env(safe-area-inset-bottom))
-        13px;
+        .input-box {
+            flex: 1;
 
-      border-top: 1px solid var(--border);
+            min-height: 49px;
 
-      background: rgba(8,8,12,.94);
+            display: flex;
+            align-items: flex-end;
 
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-    }
+            padding:
+                5px
+                6px
+                5px
+                14px;
 
-    .mic-button {
-      width: 49px;
-      min-width: 49px;
-      height: 49px;
+            border-radius: 25px;
 
-      display: flex;
-      align-items: center;
-      justify-content: center;
+            background: var(--panel);
 
-      border-radius: 50%;
+            border: 1px solid var(--border);
+        }
 
-      background: var(--panel2);
+        textarea {
+            flex: 1;
 
-      color: white;
+            max-height: 110px;
 
-      border: 1px solid var(--border);
+            resize: none;
 
-      font-size: 20px;
-    }
+            outline: none;
+            border: 0;
 
-    .mic-button.listening {
-      background: #d84747;
+            background: transparent;
 
-      animation: pulse 1.2s infinite;
-    }
+            color: white;
 
-    @keyframes pulse {
+            padding:
+                8px
+                4px;
 
-      50% {
-        transform: scale(1.08);
-      }
+            font-size: 15px;
 
-    }
+            line-height: 1.4;
+        }
 
-    .input-box {
-      flex: 1;
+        textarea::placeholder {
+            color: #777783;
+        }
 
-      min-height: 49px;
+        .send-button {
+            width: 39px;
+            height: 39px;
 
-      display: flex;
-      align-items: flex-end;
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-      padding:
-        5px
-        6px
-        5px
-        14px;
+            border-radius: 50%;
 
-      border-radius: 25px;
+            background: var(--accent);
 
-      background: var(--panel);
+            color: white;
 
-      border: 1px solid var(--border);
-    }
+            font-size: 17px;
 
-    textarea {
-      flex: 1;
+            transition: transform 0.15s;
+        }
 
-      max-height: 100px;
+        .send-button:active {
+            transform: scale(0.92);
+        }
 
-      resize: none;
+        /* MOBILE */
 
-      outline: none;
+        @media (max-height: 700px) {
+            .welcome {
+                margin-top: 3vh;
+            }
 
-      border: 0;
+            .big-logo {
+                width: 62px;
+                height: 62px;
 
-      background: transparent;
+                margin-bottom: 14px;
 
-      color: white;
+                font-size: 30px;
+            }
 
-      padding:
-        8px
-        4px;
-
-      font-size: 15px;
-    }
-
-    textarea::placeholder {
-      color: #777783;
-    }
-
-    .send-button {
-      width: 39px;
-      height: 39px;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      border-radius: 50%;
-
-      background: var(--accent);
-
-      color: white;
-
-      font-size: 17px;
-    }
-
-
-    /* =========================
-       MOBILE
-    ========================= */
-
-    @media (max-height: 700px) {
-
-      .welcome {
-        margin-top: 3vh;
-      }
-
-      .big-logo {
-        width: 62px;
-        height: 62px;
-
-        margin-bottom: 14px;
-
-        font-size: 30px;
-      }
-
-      .welcome h2 {
-        font-size: 23px;
-      }
-
-    }
-
-  </style>
+            .welcome h2 {
+                font-size: 23px;
+            }
+        }
+    </style>
 </head>
-
 
 <body>
 
-  <div class="app">
+<div class="app">
 
     <!-- HEADER -->
 
     <header class="topbar">
 
-      <div class="brand">
+        <div class="brand">
 
-        <div class="logo">
-          ✦
+            <div class="logo">
+                ✦
+            </div>
+
+            <div>
+
+                <h1>
+                    Asdrick AI
+                </h1>
+
+                <span
+                    id="status"
+                    class="status"
+                >
+                    ● En ligne
+                </span>
+
+            </div>
+
         </div>
 
-        <div>
-
-          <h1>
-            Asdrick AI
-          </h1>
-
-          <span
-            id="status"
-            class="status"
-          >
-            ● En ligne
-          </span>
-
-        </div>
-
-      </div>
-
-
-      <button
-        id="clearButton"
-        class="clear-button"
-        aria-label="Effacer la conversation"
-      >
-        🗑️
-      </button>
+        <button
+            id="clearButton"
+            class="clear-button"
+            type="button"
+            aria-label="Effacer la conversation"
+        >
+            🗑️
+        </button>
 
     </header>
 
@@ -606,71 +593,70 @@
     <!-- CHAT -->
 
     <main
-      id="chat"
-      class="chat"
+        id="chat"
+        class="chat"
     >
 
-      <section
-        id="welcome"
-        class="welcome"
-      >
+        <section
+            id="welcome"
+            class="welcome"
+        >
 
-        <div class="big-logo">
-          ✦
-        </div>
+            <div class="big-logo">
+                ✦
+            </div>
 
-        <h2>
-          Salut Asdrick 👋
-        </h2>
+            <h2>
+                Salut Asdrick 👋
+            </h2>
 
-        <p>
-          Ton assistant personnel commence ici.
-        </p>
+            <p>
+                Ton assistant personnel commence ici.
+            </p>
 
+            <div class="suggestions">
 
-        <div class="suggestions">
+                <button
+                    class="suggestion"
+                    type="button"
+                    data-command="Quelle heure est-il ?"
+                >
+                    🕐 Quelle heure est-il ?
+                </button>
 
-          <button
-            class="suggestion"
-            data-command="Quelle heure est-il ?"
-          >
-            🕐 Quelle heure est-il ?
-          </button>
+                <button
+                    class="suggestion"
+                    type="button"
+                    data-command="Ouvre Google"
+                >
+                    🌐 Ouvre Google
+                </button>
 
+                <button
+                    class="suggestion"
+                    type="button"
+                    data-command="Dis-moi bonjour"
+                >
+                    👋 Dis-moi bonjour
+                </button>
 
-          <button
-            class="suggestion"
-            data-command="Ouvre Google"
-          >
-            🌐 Ouvre Google
-          </button>
+            </div>
 
-
-          <button
-            class="suggestion"
-            data-command="Dis-moi bonjour"
-          >
-            👋 Dis-moi bonjour
-          </button>
-
-        </div>
-
-      </section>
+        </section>
 
     </main>
 
 
-    <!-- TYPING -->
+    <!-- INDICATEUR -->
 
     <div
-      id="typing"
-      class="typing"
+        id="typing"
+        class="typing"
+        aria-hidden="true"
     >
-
-      <span></span>
-      <span></span>
-      <span></span>
-
+        <span></span>
+        <span></span>
+        <span></span>
     </div>
 
 
@@ -678,87 +664,108 @@
 
     <footer class="input-area">
 
-      <button
-        id="micButton"
-        class="mic-button"
-        aria-label="Microphone"
-      >
-        🎙️
-      </button>
-
-
-      <div class="input-box">
-
-        <textarea
-          id="messageInput"
-          rows="1"
-          placeholder="Écris une commande..."
-          autocomplete="off"
-          spellcheck="true"
-        ></textarea>
-
-
         <button
-          id="sendButton"
-          class="send-button"
-          aria-label="Envoyer"
+            id="micButton"
+            class="mic-button"
+            type="button"
+            aria-label="Activer le microphone"
         >
-          ➤
+            🎙️
         </button>
 
-      </div>
+        <div class="input-box">
+
+            <textarea
+                id="messageInput"
+                rows="1"
+                placeholder="Écris un message..."
+                autocomplete="off"
+                autocorrect="on"
+                spellcheck="true"
+            ></textarea>
+
+            <button
+                id="sendButton"
+                class="send-button"
+                type="button"
+                aria-label="Envoyer"
+            >
+                ➤
+            </button>
+
+        </div>
 
     </footer>
 
-  </div>
+</div>
 
 
-  <script>
+<script>
 
-    /* ==================================================
-       ASDRICK AI
-       V0.1
-       Version autonome
-    ================================================== */
+/* =====================================================
+   ASDRICK AI
+   Frontend
+   Backend : Render
+===================================================== */
 
-
-    const chat =
-      document.getElementById("chat");
-
-    const welcome =
-      document.getElementById("welcome");
-
-    const input =
-      document.getElementById("messageInput");
-
-    const sendButton =
-      document.getElementById("sendButton");
-
-    const micButton =
-      document.getElementById("micButton");
-
-    const clearButton =
-      document.getElementById("clearButton");
-
-    const typing =
-      document.getElementById("typing");
-
-    const status =
-      document.getElementById("status");
+"use strict";
 
 
-    let recognition = null;
+/* =====================================================
+   CONFIGURATION
+===================================================== */
 
-    let listening = false;
+const API_URL =
+    "https://asdrick-ia.onrender.com";
 
 
-    /* ==================================================
-       INITIALISATION
-    ================================================== */
+/* =====================================================
+   ELEMENTS
+===================================================== */
 
-    document.addEventListener(
-      "DOMContentLoaded",
-      () => {
+const chat =
+    document.getElementById("chat");
+
+const welcome =
+    document.getElementById("welcome");
+
+const input =
+    document.getElementById("messageInput");
+
+const sendButton =
+    document.getElementById("sendButton");
+
+const micButton =
+    document.getElementById("micButton");
+
+const clearButton =
+    document.getElementById("clearButton");
+
+const typing =
+    document.getElementById("typing");
+
+const status =
+    document.getElementById("status");
+
+
+/* =====================================================
+   ETAT
+===================================================== */
+
+let recognition = null;
+
+let listening = false;
+
+let sending = false;
+
+
+/* =====================================================
+   INITIALISATION
+===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
 
         loadHistory();
 
@@ -766,725 +773,707 @@
 
         setupSuggestions();
 
-      }
-    );
-
-
-    /* ==================================================
-       SUGGESTIONS
-    ================================================== */
-
-    function setupSuggestions() {
-
-      document
-        .querySelectorAll("[data-command]")
-        .forEach(button => {
-
-          button.addEventListener(
-            "click",
-            () => {
-
-              input.value =
-                button.dataset.command;
-
-              sendMessage();
-
-            }
-          );
-
-        });
-
     }
+);
 
 
-    /* ==================================================
-       ENVOI
-    ================================================== */
+/* =====================================================
+   SUGGESTIONS
+===================================================== */
 
-    sendButton.addEventListener(
-      "click",
-      sendMessage
+function setupSuggestions() {
+
+    const buttons =
+        document.querySelectorAll(
+            "[data-command]"
+        );
+
+
+    buttons.forEach(
+        button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    input.value =
+                        button.dataset.command;
+
+                    sendMessage();
+
+                }
+            );
+
+        }
     );
 
+}
 
-    input.addEventListener(
-      "keydown",
-      event => {
+
+/* =====================================================
+   ENVOI
+===================================================== */
+
+sendButton.addEventListener(
+    "click",
+    sendMessage
+);
+
+
+input.addEventListener(
+    "keydown",
+    event => {
 
         if (
-          event.key === "Enter" &&
-          !event.shiftKey
+            event.key === "Enter" &&
+            !event.shiftKey
         ) {
 
-          event.preventDefault();
+            event.preventDefault();
 
-          sendMessage();
+            sendMessage();
 
         }
 
-      }
+    }
+);
+
+
+async function sendMessage() {
+
+    if (sending) {
+        return;
+    }
+
+
+    const message =
+        input.value.trim();
+
+
+    if (!message) {
+        return;
+    }
+
+
+    input.value = "";
+
+
+    hideWelcome();
+
+
+    addMessage(
+        "user",
+        message
     );
 
 
-    async function sendMessage() {
-
-      const text =
-        input.value.trim();
-
-      if (!text) {
-        return;
-      }
-
-
-      input.value = "";
-
-
-      hideWelcome();
-
-
-      addMessage(
+    saveMessage(
         "user",
-        text
-      );
+        message
+    );
 
 
-      saveMessage(
-        "user",
-        text
-      );
+    setThinking(true);
 
 
-      setThinking(true);
+    sending = true;
 
 
-      await wait(450);
+    try {
+
+        const response =
+            await fetch(
+                API_URL + "/api/chat",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        message: message
+                    })
+                }
+            );
 
 
-      const response =
-        processCommand(text);
+        if (!response.ok) {
+
+            throw new Error(
+                "HTTP " +
+                response.status
+            );
+
+        }
 
 
-      setThinking(false);
+        const data =
+            await response.json();
 
 
-      addMessage(
-        "ai",
-        response
-      );
+        const reply =
+            typeof data.reply === "string"
+                ? data.reply
+                : "Le serveur n'a pas fourni de réponse.";
 
 
-      saveMessage(
-        "ai",
-        response
-      );
+        addMessage(
+            "ai",
+            reply
+        );
 
 
-      speak(response);
+        saveMessage(
+            "ai",
+            reply
+        );
+
+
+        speak(
+            reply
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Erreur serveur :",
+            error
+        );
+
+
+        addMessage(
+            "ai",
+            "❌ Je n'arrive pas à contacter le serveur Asdrick AI."
+        );
+
+
+        setStatusError();
+
+    } finally {
+
+        sending = false;
+
+        setThinking(false);
 
     }
 
-
-    /* ==================================================
-       CERVEAU LOCAL TEMPORAIRE
-    ================================================== */
-
-    function processCommand(command) {
-
-      const text =
-        command
-          .toLowerCase()
-          .trim();
+}
 
 
-      /* HEURE */
+/* =====================================================
+   AFFICHAGE
+===================================================== */
 
-      if (
-        text.includes("quelle heure") ||
-        text.includes("heure actuelle") ||
-        text === "heure"
-      ) {
+function addMessage(
+    type,
+    text
+) {
 
-        return (
-          "Il est " +
-          new Date().toLocaleTimeString(
-            "fr-FR",
-            {
-              hour: "2-digit",
-              minute: "2-digit"
-            }
-          ) +
-          "."
-        );
-
-      }
-
-
-      /* DATE */
-
-      if (
-        text.includes("quelle date") ||
-        text.includes("quel jour")
-      ) {
-
-        return (
-          "Nous sommes le " +
-          new Date().toLocaleDateString(
-            "fr-FR",
-            {
-              weekday: "long",
-              day: "numeric",
-              month: "long",
-              year: "numeric"
-            }
-          ) +
-          "."
-        );
-
-      }
-
-
-      /* BONJOUR */
-
-      if (
-        text.includes("bonjour") ||
-        text.includes("salut") ||
-        text.includes("hello")
-      ) {
-
-        return (
-          "Salut Asdrick 👋\n\n" +
-          "Je suis prêt. Mon vrai cerveau IA " +
-          "sera connecté dans une prochaine version."
-        );
-
-      }
-
-
-      /* GOOGLE */
-
-      if (
-        text.includes("ouvre google") ||
-        text.includes("va sur google")
-      ) {
-
-        setTimeout(
-          () => {
-
-            window.open(
-              "https://www.google.com",
-              "_blank"
-            );
-
-          },
-          600
+    const message =
+        document.createElement(
+            "div"
         );
 
 
-        return "J'ouvre Google.";
-
-      }
-
-
-      /* YOUTUBE */
-
-      if (
-        text.includes("ouvre youtube") ||
-        text.includes("va sur youtube")
-      ) {
-
-        setTimeout(
-          () => {
-
-            window.open(
-              "https://www.youtube.com",
-              "_blank"
-            );
-
-          },
-          600
-        );
-
-
-        return "J'ouvre YouTube.";
-
-      }
-
-
-      /* QUI SUIS-JE */
-
-      if (
-        text.includes("qui es-tu") ||
-        text.includes("tu es qui")
-      ) {
-
-        return (
-          "Je suis Asdrick AI ✦\n\n" +
-          "Pour l'instant je suis la première " +
-          "version de ton assistant personnel."
-        );
-
-      }
-
-
-      /* REPONSE TEMPORAIRE */
-
-      return (
-        "J'ai bien reçu ta demande. 🧠\n\n" +
-
-        "Mon moteur conversationnel complet " +
-        "n'est pas encore connecté.\n\n" +
-
-        "La prochaine étape consiste à connecter " +
-        "un véritable modèle d'IA à cette interface " +
-        "sans exposer de clé secrète dans le navigateur."
-      );
-
-    }
-
-
-    /* ==================================================
-       AFFICHAGE MESSAGE
-    ================================================== */
-
-    function addMessage(
-      type,
-      text
-    ) {
-
-      const message =
-        document.createElement("div");
-
-
-      message.className =
+    message.className =
         "message " + type;
 
 
-      const bubble =
-        document.createElement("div");
+    const bubble =
+        document.createElement(
+            "div"
+        );
 
 
-      bubble.className =
+    bubble.className =
         "bubble";
 
 
-      bubble.textContent =
-        text;
+    bubble.textContent =
+        String(text);
 
 
-      message.appendChild(
+    message.appendChild(
         bubble
-      );
+    );
 
 
-      chat.appendChild(
+    chat.appendChild(
         message
-      );
+    );
 
 
-      scrollBottom();
+    scrollBottom();
 
+}
+
+
+function hideWelcome() {
+
+    if (!welcome) {
+        return;
     }
 
 
-    function hideWelcome() {
+    welcome.style.display =
+        "none";
 
-      if (welcome) {
-
-        welcome.style.display =
-          "none";
-
-      }
-
-    }
+}
 
 
-    function scrollBottom() {
+function scrollBottom() {
 
-      requestAnimationFrame(
+    requestAnimationFrame(
         () => {
 
-          chat.scrollTop =
-            chat.scrollHeight;
+            chat.scrollTop =
+                chat.scrollHeight;
 
         }
-      );
+    );
 
-    }
+}
 
 
-    /* ==================================================
-       INDICATEUR
-    ================================================== */
+/* =====================================================
+   ETAT IA
+===================================================== */
 
-    function setThinking(value) {
+function setThinking(
+    active
+) {
 
-      if (value) {
+    if (active) {
 
         typing.classList.add(
-          "active"
+            "active"
         );
 
         status.textContent =
-          "● Réflexion...";
+            "● Réflexion...";
 
         status.className =
-          "status thinking";
+            "status thinking";
 
-      } else {
+    } else {
 
         typing.classList.remove(
-          "active"
+            "active"
         );
 
         status.textContent =
-          "● En ligne";
+            "● En ligne";
 
         status.className =
-          "status";
-
-      }
-
-
-      scrollBottom();
+            "status";
 
     }
 
+}
 
-    /* ==================================================
-       VOIX DE SORTIE
-    ================================================== */
 
-    function speak(text) {
+function setStatusError() {
 
-      if (
+    status.textContent =
+        "● Serveur inaccessible";
+
+    status.className =
+        "status error";
+
+}
+
+
+/* =====================================================
+   VOIX DE SORTIE
+===================================================== */
+
+function speak(
+    text
+) {
+
+    if (
         !("speechSynthesis" in window)
-      ) {
+    ) {
 
         return;
 
-      }
+    }
 
 
-      try {
+    try {
 
         window.speechSynthesis.cancel();
 
 
         const clean =
-          text
-            .replace(/[✦🧠📱⚙️🎙️👋]/g, "");
+            String(text)
+                .replace(
+                    /[✦🧠📱⚙️🎙️👋❌]/g,
+                    ""
+                );
 
 
-        const voice =
-          new SpeechSynthesisUtterance(
-            clean
-          );
+        const utterance =
+            new SpeechSynthesisUtterance(
+                clean
+            );
 
 
-        voice.lang =
-          "fr-FR";
+        utterance.lang =
+            "fr-FR";
 
+        utterance.rate =
+            1;
 
-        voice.rate =
-          1;
-
-
-        voice.pitch =
-          1;
+        utterance.pitch =
+            1;
 
 
         window.speechSynthesis.speak(
-          voice
+            utterance
         );
 
-      } catch (error) {
+    } catch (error) {
 
-        console.log(
-          "Voix :",
-          error
+        console.error(
+            "Erreur synthèse vocale :",
+            error
         );
-
-      }
 
     }
 
+}
 
-    /* ==================================================
-       RECONNAISSANCE VOCALE
-    ================================================== */
 
-    function setupVoice() {
+/* =====================================================
+   RECONNAISSANCE VOCALE
+===================================================== */
 
-      const SpeechRecognition =
+function setupVoice() {
+
+    const SpeechRecognition =
         window.SpeechRecognition ||
         window.webkitSpeechRecognition;
 
 
-      if (!SpeechRecognition) {
+    if (!SpeechRecognition) {
+
+        micButton.disabled =
+            true;
 
         micButton.style.opacity =
-          "0.5";
-
-        status.textContent =
-          "● Voix non disponible";
+            "0.45";
 
         return;
 
-      }
+    }
 
 
-      recognition =
-        new SpeechRecognition();
+    try {
+
+        recognition =
+            new SpeechRecognition();
 
 
-      recognition.lang =
-        "fr-FR";
+        recognition.lang =
+            "fr-FR";
 
 
-      recognition.continuous =
-        false;
+        recognition.continuous =
+            false;
 
 
-      recognition.interimResults =
-        false;
+        recognition.interimResults =
+            false;
 
 
-      recognition.maxAlternatives =
-        1;
+        recognition.maxAlternatives =
+            1;
 
 
-      recognition.onstart =
-        () => {
-
-          listening =
-            true;
+        recognition.onstart =
+            handleVoiceStart;
 
 
-          micButton.classList.add(
-            "listening"
-          );
+        recognition.onresult =
+            handleVoiceResult;
 
 
-          status.textContent =
-            "● J'écoute...";
+        recognition.onerror =
+            handleVoiceError;
 
 
-          status.className =
-            "status listening";
+        recognition.onend =
+            handleVoiceEnd;
 
-        };
+    } catch (error) {
 
-
-      recognition.onresult =
-        event => {
-
-          const result =
-            event.results?.[0]?.[0]?.transcript;
+        console.error(
+            "Initialisation microphone :",
+            error
+        );
 
 
-          if (!result) {
+        recognition =
+            null;
+
+    }
+
+}
+
+
+function handleVoiceStart() {
+
+    listening =
+        true;
+
+
+    micButton.classList.add(
+        "listening"
+    );
+
+
+    status.textContent =
+        "● J'écoute...";
+
+
+    status.className =
+        "status listening";
+
+}
+
+
+function handleVoiceResult(
+    event
+) {
+
+    try {
+
+        const result =
+            event
+                .results
+                ?.item(0)
+                ?.item(0)
+                ?.transcript;
+
+
+        if (!result) {
             return;
-          }
+        }
 
 
-          input.value =
+        input.value =
             result;
 
 
-          stopVoice();
+        stopVoice();
 
 
-          sendMessage();
+        sendMessage();
 
-        };
+    } catch (error) {
 
-
-      recognition.onerror =
-        event => {
-
-          console.log(
-            "Microphone :",
-            event.error
-          );
-
-
-          stopVoice();
-
-
-          if (
-            event.error ===
-            "not-allowed"
-          ) {
-
-            addMessage(
-              "ai",
-              "🎙️ L'accès au microphone a été refusé. Autorise le microphone dans les réglages de Safari."
-            );
-
-          }
-
-        };
-
-
-      recognition.onend =
-        () => {
-
-          stopVoice();
-
-        };
+        console.error(
+            "Résultat vocal :",
+            error
+        );
 
     }
 
+}
 
-    function startVoice() {
 
-      if (
+function handleVoiceError(
+    event
+) {
+
+    console.error(
+        "Erreur microphone :",
+        event.error
+    );
+
+
+    stopVoice();
+
+
+    if (
+        event.error ===
+        "not-allowed"
+    ) {
+
+        addMessage(
+            "ai",
+            "🎙️ L'accès au microphone est refusé. Autorise le microphone dans les réglages de Safari."
+        );
+
+    }
+
+}
+
+
+function handleVoiceEnd() {
+
+    stopVoice();
+
+}
+
+
+function startVoice() {
+
+    if (
         !recognition ||
         listening
-      ) {
+    ) {
 
         return;
 
-      }
+    }
 
 
-      try {
+    try {
 
         recognition.start();
 
-      } catch (error) {
+    } catch (error) {
 
-        console.log(
-          "Démarrage micro :",
-          error
+        console.error(
+            "Démarrage microphone :",
+            error
         );
 
-      }
+        stopVoice();
 
     }
 
+}
 
-    function stopVoice() {
 
-      listening =
+function stopVoice() {
+
+    listening =
         false;
 
 
-      micButton.classList.remove(
+    micButton.classList.remove(
         "listening"
-      );
+    );
 
 
-      status.textContent =
+    status.textContent =
         "● En ligne";
 
 
-      status.className =
+    status.className =
         "status";
 
-    }
+}
 
 
-    micButton.addEventListener(
-      "click",
-      () => {
+micButton.addEventListener(
+    "click",
+    () => {
 
         if (!recognition) {
 
-          addMessage(
-            "ai",
-            "🎙️ La reconnaissance vocale n'est pas disponible dans ce navigateur."
-          );
+            addMessage(
+                "ai",
+                "🎙️ La reconnaissance vocale n'est pas disponible dans ce navigateur."
+            );
 
-          return;
+            return;
 
         }
 
 
         if (listening) {
 
-          try {
+            try {
 
-            recognition.stop();
+                recognition.stop();
 
-          } catch (error) {
+            } catch (error) {
 
-            console.log(error);
+                console.error(
+                    error
+                );
 
-          }
+            }
 
-
-          return;
+            return;
 
         }
 
 
         startVoice();
 
-      }
-    );
+    }
+);
 
 
-    /* ==================================================
-       MEMOIRE LOCALE
-    ================================================== */
+/* =====================================================
+   MEMOIRE LOCALE
+===================================================== */
 
-    function saveMessage(
-      type,
-      text
-    ) {
+function saveMessage(
+    type,
+    text
+) {
 
-      try {
+    try {
 
         const history =
-          JSON.parse(
-            localStorage.getItem(
-              "asdrick_history"
-            ) || "[]"
-          );
+            JSON.parse(
+                localStorage.getItem(
+                    "asdrick_history"
+                ) || "[]"
+            );
 
 
         history.push({
-          type: type,
-          text: text,
-          date: Date.now()
+            type: type,
+            text: String(text),
+            date: Date.now()
         });
 
 
         localStorage.setItem(
-          "asdrick_history",
-          JSON.stringify(history)
+            "asdrick_history",
+            JSON.stringify(history)
         );
 
-      } catch (error) {
+    } catch (error) {
 
-        console.log(
-          "Mémoire :",
-          error
+        console.error(
+            "Sauvegarde mémoire :",
+            error
         );
-
-      }
 
     }
 
+}
 
-    function loadHistory() {
 
-      try {
+function loadHistory() {
+
+    try {
 
         const history =
-          JSON.parse(
-            localStorage.getItem(
-              "asdrick_history"
-            ) || "[]"
-          );
+            JSON.parse(
+                localStorage.getItem(
+                    "asdrick_history"
+                ) || "[]"
+            );
 
 
         if (
-          history.length === 0
+            !Array.isArray(history) ||
+            history.length === 0
         ) {
 
-          return;
+            return;
 
         }
 
@@ -1493,79 +1482,91 @@
 
 
         history.forEach(
-          message => {
+            message => {
 
-            addMessage(
-              message.type,
-              message.text
+                if (
+                    !message ||
+                    !message.type ||
+                    typeof message.text !== "string"
+                ) {
+
+                    return;
+
+                }
+
+
+                addMessage(
+                    message.type,
+                    message.text
+                );
+
+            }
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Chargement mémoire :",
+            error
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   EFFACER
+===================================================== */
+
+clearButton.addEventListener(
+    "click",
+    () => {
+
+        try {
+
+            localStorage.removeItem(
+                "asdrick_history"
             );
 
-          }
+        } catch (error) {
+
+            console.error(
+                error
+            );
+
+        }
+
+
+        const messages =
+            chat.querySelectorAll(
+                ".message"
+            );
+
+
+        messages.forEach(
+            message => {
+
+                message.remove();
+
+            }
         );
 
-      } catch (error) {
 
-        console.log(
-          "Chargement mémoire :",
-          error
-        );
+        if (welcome) {
 
-      }
+            welcome.style.display =
+                "block";
+
+        }
+
+
+        scrollBottom();
 
     }
+);
 
-
-    /* ==================================================
-       EFFACER
-    ================================================== */
-
-    clearButton.addEventListener(
-      "click",
-      () => {
-
-        localStorage.removeItem(
-          "asdrick_history"
-        );
-
-
-        chat.innerHTML = "";
-
-
-        chat.appendChild(
-          welcome
-        );
-
-
-        welcome.style.display =
-          "block";
-
-
-        addMessage(
-          "ai",
-          "Mémoire effacée. On repart de zéro."
-        );
-
-      }
-    );
-
-
-    /* ==================================================
-       UTILITAIRE
-    ================================================== */
-
-    function wait(milliseconds) {
-
-      return new Promise(
-        resolve =>
-          setTimeout(
-            resolve,
-            milliseconds
-          )
-      );
-
-    }
-
-  </script>
+</script>
 
 </body>
 </html>
