@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  >
+
+  <meta name="theme-color" content="#08080c">
+
+  <meta
+    name="apple-mobile-web-app-capable"
+    content="yes"
+  >
+
+  <meta
+    name="apple-mobile-web-app-status-bar-style"
+    content="black-translucent"
+  >
+
+  <title>Asdrick AI</title>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #08080c;
+      --panel: #111116;
+      --panel2: #19191f;
+      --text: #ffffff;
+      --muted: #92929d;
+      --border: rgba(255,255,255,0.08);
+      --accent: #7657ff;
+      --success: #55df91;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: var(--bg);
+      color: var(--text);
+
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "SF Pro Display",
+        "Segoe UI",
+        sans-serif;
+    }
+
+    body {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+      cursor: pointer;
+    }
+
+    /* =========================
+       APPLICATION
+    ========================= */
+
+    .app {
+      width: 100%;
+      height: 100dvh;
+
+      display: flex;
+      flex-direction: column;
+
+      background:
+        radial-gradient(
+          circle at 50% -20%,
+          rgba(118,87,255,0.20),
+          transparent 42%
+        ),
+        var(--bg);
+    }
+
+
+    /* =========================
+       HEADER
+    ========================= */
+
+    .topbar {
+      min-height: 74px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding:
+        calc(env(safe-area-inset-top) + 10px)
+        16px
+        10px
+        16px;
+
+      border-bottom: 1px solid var(--border);
+
+      background: rgba(8,8,12,0.88);
+
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      width: 43px;
+      height: 43px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 14px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #7657ff,
+          #b08cff
+        );
+
+      box-shadow:
+        0 0 30px rgba(118,87,255,0.35);
+
+      font-size: 23px;
+      font-weight: bold;
+    }
+
+    .brand h1 {
+      font-size: 17px;
+      font-weight: 700;
+    }
+
+    .status {
+      display: block;
+
+      margin-top: 2px;
+
+      font-size: 11px;
+
+      color: var(--success);
+    }
+
+    .status.listening {
+      color: #ff6b6b;
+    }
+
+    .status.thinking {
+      color: #b08cff;
+    }
+
+    .clear-button {
+      width: 40px;
+      height: 40px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 12px;
+
+      background: var(--panel2);
+
+      color: white;
+
+      border: 1px solid var(--border);
+
+      font-size: 17px;
+    }
+
+
+    /* =========================
+       CHAT
+    ========================= */
+
+    .chat {
+      flex: 1;
+
+      overflow-y: auto;
+      overscroll-behavior: contain;
+
+      padding: 24px 15px 20px;
+
+      scroll-behavior: smooth;
+    }
+
+    .chat::-webkit-scrollbar {
+      display: none;
+    }
+
+
+    /* =========================
+       WELCOME
+    ========================= */
+
+    .welcome {
+      max-width: 520px;
+
+      margin: 8vh auto 0;
+
+      text-align: center;
+    }
+
+    .big-logo {
+      width: 76px;
+      height: 76px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      margin: 0 auto 20px;
+
+      border-radius: 25px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #7657ff,
+          #b08cff
+        );
+
+      box-shadow:
+        0 0 40px rgba(118,87,255,0.28);
+
+      font-size: 39px;
+      font-weight: bold;
+    }
+
+    .welcome h2 {
+      font-size: 27px;
+      margin-bottom: 8px;
+    }
+
+    .welcome p {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+
+    /* =========================
+       SUGGESTIONS
+    ========================= */
+
+    .suggestions {
+      display: grid;
+      gap: 10px;
+
+      margin-top: 28px;
+    }
+
+    .suggestion {
+      padding: 14px 16px;
+
+      border-radius: 16px;
+
+      background: var(--panel);
+
+      color: white;
+
+      border: 1px solid var(--border);
+
+      text-align: left;
+
+      transition:
+        transform .15s,
+        background .15s;
+    }
+
+    .suggestion:active {
+      transform: scale(.97);
+      background: var(--panel2);
+    }
+
+
+    /* =========================
+       MESSAGES
+    ========================= */
+
+    .message {
+      display: flex;
+
+      margin-bottom: 14px;
+    }
+
+    .message.user {
+      justify-content: flex-end;
+    }
+
+    .message.ai {
+      justify-content: flex-start;
+    }
+
+    .bubble {
+      max-width: 84%;
+
+      padding: 12px 15px;
+
+      border-radius: 18px;
+
+      font-size: 15px;
+      line-height: 1.45;
+
+      white-space: pre-wrap;
+
+      animation: appear .18s ease;
+    }
+
+    @keyframes appear {
+      from {
+        opacity: 0;
+        transform: translateY(5px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .user .bubble {
+      background: var(--accent);
+
+      border-bottom-right-radius: 6px;
+    }
+
+    .ai .bubble {
+      background: var(--panel2);
+
+      border: 1px solid var(--border);
+
+      border-bottom-left-radius: 6px;
+    }
+
+
+    /* =========================
+       TYPING
+    ========================= */
+
+    .typing {
+      display: none;
+
+      gap: 5px;
+
+      padding:
+        0
+        20px
+        10px;
+    }
+
+    .typing.active {
+      display: flex;
+    }
+
+    .typing span {
+      width: 6px;
+      height: 6px;
+
+      border-radius: 50%;
+
+      background: #aaa;
+
+      animation: typing 1s infinite;
+    }
+
+    .typing span:nth-child(2) {
+      animation-delay: .15s;
+    }
+
+    .typing span:nth-child(3) {
+      animation-delay: .3s;
+    }
+
+    @keyframes typing {
+
+      0%,
+      60%,
+      100% {
+        opacity: .25;
+        transform: translateY(0);
+      }
+
+      30% {
+        opacity: 1;
+        transform: translateY(-4px);
+      }
+
+    }
+
+
+    /* =========================
+       INPUT
+    ========================= */
+
+    .input-area {
+      display: flex;
+
+      gap: 9px;
+
+      padding:
+        10px
+        13px
+        calc(12px + env(safe-area-inset-bottom))
+        13px;
+
+      border-top: 1px solid var(--border);
+
+      background: rgba(8,8,12,.94);
+
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .mic-button {
+      width: 49px;
+      min-width: 49px;
+      height: 49px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 50%;
+
+      background: var(--panel2);
+
+      color: white;
+
+      border: 1px solid var(--border);
+
+      font-size: 20px;
+    }
+
+    .mic-button.listening {
+      background: #d84747;
+
+      animation: pulse 1.2s infinite;
+    }
+
+    @keyframes pulse {
+
+      50% {
+        transform: scale(1.08);
+      }
+
+    }
+
+    .input-box {
+      flex: 1;
+
+      min-height: 49px;
+
+      display: flex;
+      align-items: flex-end;
+
+      padding:
+        5px
+        6px
+        5px
+        14px;
+
+      border-radius: 25px;
+
+      background: var(--panel);
+
+      border: 1px solid var(--border);
+    }
+
+    textarea {
+      flex: 1;
+
+      max-height: 100px;
+
+      resize: none;
+
+      outline: none;
+
+      border: 0;
+
+      background: transparent;
+
+      color: white;
+
+      padding:
+        8px
+        4px;
+
+      font-size: 15px;
+    }
+
+    textarea::placeholder {
+      color: #777783;
+    }
+
+    .send-button {
+      width: 39px;
+      height: 39px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 50%;
+
+      background: var(--accent);
+
+      color: white;
+
+      font-size: 17px;
+    }
+
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-height: 700px) {
+
+      .welcome {
+        margin-top: 3vh;
+      }
+
+      .big-logo {
+        width: 62px;
+        height: 62px;
+
+        margin-bottom: 14px;
+
+        font-size: 30px;
+      }
+
+      .welcome h2 {
+        font-size: 23px;
+      }
+
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+  <div class="app">
+
+    <!-- HEADER -->
+
+    <header class="topbar">
+
+      <div class="brand">
+
+        <div class="logo">
+          ✦
+        </div>
+
+        <div>
+
+          <h1>
+            Asdrick AI
+          </h1>
+
+          <span
+            id="status"
+            class="status"
+          >
+            ● En ligne
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <button
+        id="clearButton"
+        class="clear-button"
+        aria-label="Effacer la conversation"
+      >
+        🗑️
+      </button>
+
+    </header>
+
+
+    <!-- CHAT -->
+
+    <main
+      id="chat"
+      class="chat"
+    >
+
+      <section
+        id="welcome"
+        class="welcome"
+      >
+
+        <div class="big-logo">
+          ✦
+        </div>
+
+        <h2>
+          Salut Asdrick 👋
+        </h2>
+
+        <p>
+          Ton assistant personnel commence ici.
+        </p>
+
+
+        <div class="suggestions">
+
+          <button
+            class="suggestion"
+            data-command="Quelle heure est-il ?"
+          >
+            🕐 Quelle heure est-il ?
+          </button>
+
+
+          <button
+            class="suggestion"
+            data-command="Ouvre Google"
+          >
+            🌐 Ouvre Google
+          </button>
+
+
+          <button
+            class="suggestion"
+            data-command="Dis-moi bonjour"
+          >
+            👋 Dis-moi bonjour
+          </button>
+
+        </div>
+
+      </section>
+
+    </main>
+
+
+    <!-- TYPING -->
+
+    <div
+      id="typing"
+      class="typing"
+    >
+
+      <span></span>
+      <span></span>
+      <span></span>
+
+    </div>
+
+
+    <!-- INPUT -->
+
+    <footer class="input-area">
+
+      <button
+        id="micButton"
+        class="mic-button"
+        aria-label="Microphone"
+      >
+        🎙️
+      </button>
+
+
+      <div class="input-box">
+
+        <textarea
+          id="messageInput"
+          rows="1"
+          placeholder="Écris une commande..."
+          autocomplete="off"
+          spellcheck="true"
+        ></textarea>
+
+
+        <button
+          id="sendButton"
+          class="send-button"
+          aria-label="Envoyer"
+        >
+          ➤
+        </button>
+
+      </div>
+
+    </footer>
+
+  </div>
+
+
+  <script>
+
+    /* ==================================================
+       ASDRICK AI
+       V0.1
+       Version autonome
+    ================================================== */
+
+
+    const chat =
+      document.getElementById("chat");
+
+    const welcome =
+      document.getElementById("welcome");
+
+    const input =
+      document.getElementById("messageInput");
+
+    const sendButton =
+      document.getElementById("sendButton");
+
+    const micButton =
+      document.getElementById("micButton");
+
+    const clearButton =
+      document.getElementById("clearButton");
+
+    const typing =
+      document.getElementById("typing");
+
+    const status =
+      document.getElementById("status");
+
+
+    let recognition = null;
+
+    let listening = false;
+
+
+    /* ==================================================
+       INITIALISATION
+    ================================================== */
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      () => {
+
+        loadHistory();
+
+        setupVoice();
+
+        setupSuggestions();
+
+      }
+    );
+
+
+    /* ==================================================
+       SUGGESTIONS
+    ================================================== */
+
+    function setupSuggestions() {
+
+      document
+        .querySelectorAll("[data-command]")
+        .forEach(button => {
+
+          button.addEventListener(
+            "click",
+            () => {
+
+              input.value =
+                button.dataset.command;
+
+              sendMessage();
+
+            }
+          );
+
+        });
+
+    }
+
+
+    /* ==================================================
+       ENVOI
+    ================================================== */
+
+    sendButton.addEventListener(
+      "click",
+      sendMessage
+    );
+
+
+    input.addEventListener(
+      "keydown",
+      event => {
+
+        if (
+          event.key === "Enter" &&
+          !event.shiftKey
+        ) {
+
+          event.preventDefault();
+
+          sendMessage();
+
+        }
+
+      }
+    );
+
+
+    async function sendMessage() {
+
+      const text =
+        input.value.trim();
+
+      if (!text) {
+        return;
+      }
+
+
+      input.value = "";
+
+
+      hideWelcome();
+
+
+      addMessage(
+        "user",
+        text
+      );
+
+
+      saveMessage(
+        "user",
+        text
+      );
+
+
+      setThinking(true);
+
+
+      await wait(450);
+
+
+      const response =
+        processCommand(text);
+
+
+      setThinking(false);
+
+
+      addMessage(
+        "ai",
+        response
+      );
+
+
+      saveMessage(
+        "ai",
+        response
+      );
+
+
+      speak(response);
+
+    }
+
+
+    /* ==================================================
+       CERVEAU LOCAL TEMPORAIRE
+    ================================================== */
+
+    function processCommand(command) {
+
+      const text =
+        command
+          .toLowerCase()
+          .trim();
+
+
+      /* HEURE */
+
+      if (
+        text.includes("quelle heure") ||
+        text.includes("heure actuelle") ||
+        text === "heure"
+      ) {
+
+        return (
+          "Il est " +
+          new Date().toLocaleTimeString(
+            "fr-FR",
+            {
+              hour: "2-digit",
+              minute: "2-digit"
+            }
+          ) +
+          "."
+        );
+
+      }
+
+
+      /* DATE */
+
+      if (
+        text.includes("quelle date") ||
+        text.includes("quel jour")
+      ) {
+
+        return (
+          "Nous sommes le " +
+          new Date().toLocaleDateString(
+            "fr-FR",
+            {
+              weekday: "long",
+              day: "numeric",
+              month: "long",
+              year: "numeric"
+            }
+          ) +
+          "."
+        );
+
+      }
+
+
+      /* BONJOUR */
+
+      if (
+        text.includes("bonjour") ||
+        text.includes("salut") ||
+        text.includes("hello")
+      ) {
+
+        return (
+          "Salut Asdrick 👋\n\n" +
+          "Je suis prêt. Mon vrai cerveau IA " +
+          "sera connecté dans une prochaine version."
+        );
+
+      }
+
+
+      /* GOOGLE */
+
+      if (
+        text.includes("ouvre google") ||
+        text.includes("va sur google")
+      ) {
+
+        setTimeout(
+          () => {
+
+            window.open(
+              "https://www.google.com",
+              "_blank"
+            );
+
+          },
+          600
+        );
+
+
+        return "J'ouvre Google.";
+
+      }
+
+
+      /* YOUTUBE */
+
+      if (
+        text.includes("ouvre youtube") ||
+        text.includes("va sur youtube")
+      ) {
+
+        setTimeout(
+          () => {
+
+            window.open(
+              "https://www.youtube.com",
+              "_blank"
+            );
+
+          },
+          600
+        );
+
+
+        return "J'ouvre YouTube.";
+
+      }
+
+
+      /* QUI SUIS-JE */
+
+      if (
+        text.includes("qui es-tu") ||
+        text.includes("tu es qui")
+      ) {
+
+        return (
+          "Je suis Asdrick AI ✦\n\n" +
+          "Pour l'instant je suis la première " +
+          "version de ton assistant personnel."
+        );
+
+      }
+
+
+      /* REPONSE TEMPORAIRE */
+
+      return (
+        "J'ai bien reçu ta demande. 🧠\n\n" +
+
+        "Mon moteur conversationnel complet " +
+        "n'est pas encore connecté.\n\n" +
+
+        "La prochaine étape consiste à connecter " +
+        "un véritable modèle d'IA à cette interface " +
+        "sans exposer de clé secrète dans le navigateur."
+      );
+
+    }
+
+
+    /* ==================================================
+       AFFICHAGE MESSAGE
+    ================================================== */
+
+    function addMessage(
+      type,
+      text
+    ) {
+
+      const message =
+        document.createElement("div");
+
+
+      message.className =
+        "message " + type;
+
+
+      const bubble =
+        document.createElement("div");
+
+
+      bubble.className =
+        "bubble";
+
+
+      bubble.textContent =
+        text;
+
+
+      message.appendChild(
+        bubble
+      );
+
+
+      chat.appendChild(
+        message
+      );
+
+
+      scrollBottom();
+
+    }
+
+
+    function hideWelcome() {
+
+      if (welcome) {
+
+        welcome.style.display =
+          "none";
+
+      }
+
+    }
+
+
+    function scrollBottom() {
+
+      requestAnimationFrame(
+        () => {
+
+          chat.scrollTop =
+            chat.scrollHeight;
+
+        }
+      );
+
+    }
+
+
+    /* ==================================================
+       INDICATEUR
+    ================================================== */
+
+    function setThinking(value) {
+
+      if (value) {
+
+        typing.classList.add(
+          "active"
+        );
+
+        status.textContent =
+          "● Réflexion...";
+
+        status.className =
+          "status thinking";
+
+      } else {
+
+        typing.classList.remove(
+          "active"
+        );
+
+        status.textContent =
+          "● En ligne";
+
+        status.className =
+          "status";
+
+      }
+
+
+      scrollBottom();
+
+    }
+
+
+    /* ==================================================
+       VOIX DE SORTIE
+    ================================================== */
+
+    function speak(text) {
+
+      if (
+        !("speechSynthesis" in window)
+      ) {
+
+        return;
+
+      }
+
+
+      try {
+
+        window.speechSynthesis.cancel();
+
+
+        const clean =
+          text
+            .replace(/[✦🧠📱⚙️🎙️👋]/g, "");
+
+
+        const voice =
+          new SpeechSynthesisUtterance(
+            clean
+          );
+
+
+        voice.lang =
+          "fr-FR";
+
+
+        voice.rate =
+          1;
+
+
+        voice.pitch =
+          1;
+
+
+        window.speechSynthesis.speak(
+          voice
+        );
+
+      } catch (error) {
+
+        console.log(
+          "Voix :",
+          error
+        );
+
+      }
+
+    }
+
+
+    /* ==================================================
+       RECONNAISSANCE VOCALE
+    ================================================== */
+
+    function setupVoice() {
+
+      const SpeechRecognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+
+      if (!SpeechRecognition) {
+
+        micButton.style.opacity =
+          "0.5";
+
+        status.textContent =
+          "● Voix non disponible";
+
+        return;
+
+      }
+
+
+      recognition =
+        new SpeechRecognition();
+
+
+      recognition.lang =
+        "fr-FR";
+
+
+      recognition.continuous =
+        false;
+
+
+      recognition.interimResults =
+        false;
+
+
+      recognition.maxAlternatives =
+        1;
+
+
+      recognition.onstart =
+        () => {
+
+          listening =
+            true;
+
+
+          micButton.classList.add(
+            "listening"
+          );
+
+
+          status.textContent =
+            "● J'écoute...";
+
+
+          status.className =
+            "status listening";
+
+        };
+
+
+      recognition.onresult =
+        event => {
+
+          const result =
+            event.results?.[0]?.[0]?.transcript;
+
+
+          if (!result) {
+            return;
+          }
+
+
+          input.value =
+            result;
+
+
+          stopVoice();
+
+
+          sendMessage();
+
+        };
+
+
+      recognition.onerror =
+        event => {
+
+          console.log(
+            "Microphone :",
+            event.error
+          );
+
+
+          stopVoice();
+
+
+          if (
+            event.error ===
+            "not-allowed"
+          ) {
+
+            addMessage(
+              "ai",
+              "🎙️ L'accès au microphone a été refusé. Autorise le microphone dans les réglages de Safari."
+            );
+
+          }
+
+        };
+
+
+      recognition.onend =
+        () => {
+
+          stopVoice();
+
+        };
+
+    }
+
+
+    function startVoice() {
+
+      if (
+        !recognition ||
+        listening
+      ) {
+
+        return;
+
+      }
+
+
+      try {
+
+        recognition.start();
+
+      } catch (error) {
+
+        console.log(
+          "Démarrage micro :",
+          error
+        );
+
+      }
+
+    }
+
+
+    function stopVoice() {
+
+      listening =
+        false;
+
+
+      micButton.classList.remove(
+        "listening"
+      );
+
+
+      status.textContent =
+        "● En ligne";
+
+
+      status.className =
+        "status";
+
+    }
+
+
+    micButton.addEventListener(
+      "click",
+      () => {
+
+        if (!recognition) {
+
+          addMessage(
+            "ai",
+            "🎙️ La reconnaissance vocale n'est pas disponible dans ce navigateur."
+          );
+
+          return;
+
+        }
+
+
+        if (listening) {
+
+          try {
+
+            recognition.stop();
+
+          } catch (error) {
+
+            console.log(error);
+
+          }
+
+
+          return;
+
+        }
+
+
+        startVoice();
+
+      }
+    );
+
+
+    /* ==================================================
+       MEMOIRE LOCALE
+    ================================================== */
+
+    function saveMessage(
+      type,
+      text
+    ) {
+
+      try {
+
+        const history =
+          JSON.parse(
+            localStorage.getItem(
+              "asdrick_history"
+            ) || "[]"
+          );
+
+
+        history.push({
+          type: type,
+          text: text,
+          date: Date.now()
+        });
+
+
+        localStorage.setItem(
+          "asdrick_history",
+          JSON.stringify(history)
+        );
+
+      } catch (error) {
+
+        console.log(
+          "Mémoire :",
+          error
+        );
+
+      }
+
+    }
+
+
+    function loadHistory() {
+
+      try {
+
+        const history =
+          JSON.parse(
+            localStorage.getItem(
+              "asdrick_history"
+            ) || "[]"
+          );
+
+
+        if (
+          history.length === 0
+        ) {
+
+          return;
+
+        }
+
+
+        hideWelcome();
+
+
+        history.forEach(
+          message => {
+
+            addMessage(
+              message.type,
+              message.text
+            );
+
+          }
+        );
+
+      } catch (error) {
+
+        console.log(
+          "Chargement mémoire :",
+          error
+        );
+
+      }
+
+    }
+
+
+    /* ==================================================
+       EFFACER
+    ================================================== */
+
+    clearButton.addEventListener(
+      "click",
+      () => {
+
+        localStorage.removeItem(
+          "asdrick_history"
+        );
+
+
+        chat.innerHTML = "";
+
+
+        chat.appendChild(
+          welcome
+        );
+
+
+        welcome.style.display =
+          "block";
+
+
+        addMessage(
+          "ai",
+          "Mémoire effacée. On repart de zéro."
+        );
+
+      }
+    );
+
+
+    /* ==================================================
+       UTILITAIRE
+    ================================================== */
+
+    function wait(milliseconds) {
+
+      return new Promise(
+        resolve =>
+          setTimeout(
+            resolve,
+            milliseconds
+          )
+      );
+
+    }
+
+  </script>
+
+</body>
+</html>
