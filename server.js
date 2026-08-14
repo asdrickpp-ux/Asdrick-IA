@@ -2,12 +2,12 @@ const express = require("express");
 const OpenAI = require("openai");
 
 const app = express();
-
 const PORT = process.env.PORT || 3000;
-const apiKey = process.env.OPENAI_API_KEY;
 
-const client = apiKey
-    ? new OpenAI({ apiKey })
+const client = process.env.OPENAI_API_KEY
+    ? new OpenAI({
+        apiKey: process.env.OPENAI_API_KEY
+    })
     : null;
 
 
@@ -17,11 +17,16 @@ const client = apiKey
 
 app.use((req, res, next) => {
 
-    res.header("Access-Control-Allow-Origin", "*");
+    res.header(
+        "Access-Control-Allow-Origin",
+        "*"
+    );
+
     res.header(
         "Access-Control-Allow-Methods",
         "GET,POST,OPTIONS"
     );
+
     res.header(
         "Access-Control-Allow-Headers",
         "Content-Type"
@@ -55,7 +60,7 @@ app.get("/", (req, res) => {
     res.json({
         status: "online",
         assistant: "Asdrick AI",
-        version: "3.1",
+        version: "5.0",
         ai: client
             ? "connected"
             : "missing_api_key"
@@ -98,17 +103,10 @@ app.post("/api/chat", async (req, res) => {
         }
 
 
-        const receivedHistory =
+        const history =
             Array.isArray(req.body?.history)
                 ? req.body.history
-                : [];
-
-
-        const history =
-            receivedHistory
-                .filter(item => {
-
-                    return (
+                    .filter(item =>
                         item &&
                         (
                             item.role === "user" ||
@@ -116,19 +114,9 @@ app.post("/api/chat", async (req, res) => {
                         ) &&
                         typeof item.content === "string" &&
                         item.content.trim()
-                    );
-
-                })
-                .slice(-20);
-
-
-        const conversation = [
-            ...history,
-            {
-                role: "user",
-                content: message
-            }
-        ];
+                    )
+                    .slice(-20)
+                : [];
 
 
         const response =
@@ -138,25 +126,31 @@ app.post("/api/chat", async (req, res) => {
 
                 instructions: `
 
-Tu es Asdrick AI, l'assistant personnel
-d'Asdrick.
+Tu es Asdrick AI.
+
+Tu es l'assistant personnel d'Asdrick.
 
 Tu réponds en français par défaut.
 
-Tu es naturel, intelligent, direct,
-chaleureux et parfois humoristique.
+Tu dois avoir une conversation naturelle,
+fluide et humaine.
 
-Tu utilises l'historique fourni pour
-comprendre le contexte.
+Ne parle pas comme un robot ou comme une
+documentation technique.
+
+À l'oral, privilégie des réponses courtes,
+naturelles et faciles à écouter.
+
+Tu peux être drôle lorsque le contexte
+s'y prête.
+
+Tu dois tenir compte de l'historique fourni.
 
 ==================================================
-ACTIONS DISPONIBLES
+ACTIONS IPHONE
 ==================================================
 
-Tu peux demander UNE SEULE action
-par réponse.
-
-Actions disponibles :
+Les seules actions actuellement autorisées sont :
 
 open_youtube
 open_tiktok
@@ -164,104 +158,130 @@ open_messages
 open_amazon
 open_netflix
 open_revolut
+open_timer
+open_alarm
+open_website
 
 ==================================================
-RÈGLES DES ACTIONS
+APPLICATIONS
 ==================================================
 
-Si l'utilisateur demande clairement
-d'ouvrir YouTube :
+Pour ouvrir YouTube :
 
 ACTION:open_youtube
 
-Si l'utilisateur demande clairement
-d'ouvrir TikTok :
+Pour ouvrir TikTok :
 
 ACTION:open_tiktok
 
-Si l'utilisateur demande clairement
-d'ouvrir Messages :
+Pour ouvrir Messages :
 
 ACTION:open_messages
 
-Si l'utilisateur demande clairement
-d'ouvrir Amazon :
+Pour ouvrir Amazon :
 
 ACTION:open_amazon
 
-Si l'utilisateur demande clairement
-d'ouvrir Netflix :
+Pour ouvrir Netflix :
 
 ACTION:open_netflix
 
-Si l'utilisateur demande clairement
-d'ouvrir Revolut :
+Pour ouvrir Revolut :
 
 ACTION:open_revolut
 
 ==================================================
-IMPORTANT
+TEMPS
 ==================================================
+
+Pour demander le raccourci minuteur :
+
+ACTION:open_timer
+
+Pour demander le raccourci alarme :
+
+ACTION:open_alarm
+
+==================================================
+WEB
+==================================================
+
+Pour ouvrir un site web :
+
+ACTION:open_website
+
+Si une URL précise est demandée,
+ajoute :
+
+URL:https://exemple.com
+
+==================================================
+RÈGLES
+==================================================
+
+Une seule action maximum par réponse.
 
 Si aucune action n'est nécessaire,
 réponds normalement.
 
-Si une action est nécessaire,
-tu peux expliquer brièvement ce que
-tu vas faire puis termine exactement
-par la commande d'action.
+Ne prétends jamais avoir effectué une action
+si elle n'a pas réellement été déclenchée.
 
-Exemple :
+Ne crée jamais d'action qui n'est pas dans
+la liste autorisée.
 
-Je t'ouvre TikTok.
+Pour Revolut, tu peux uniquement ouvrir
+l'application.
 
-ACTION:open_tiktok
-
-Ne crée jamais une action qui n'existe
-pas dans la liste.
-
-Ne prétends jamais avoir exécuté une
-action si aucune action n'a été déclenchée.
+Tu ne peux pas effectuer de paiement,
+virement ou opération bancaire.
 
 ==================================================
-SÉCURITÉ
+STYLE VOCAL
 ==================================================
 
-L'action Revolut ne permet ici que
-d'ouvrir l'application.
+Évite les longues introductions.
 
-Tu ne dois jamais prétendre pouvoir
-effectuer un paiement, un virement,
-modifier un compte bancaire ou lire
-des informations privées.
+Évite les listes inutiles lorsque
+l'utilisateur parle à la voix.
+
+Utilise une ponctuation naturelle.
+
+Si la question est simple,
+réponds simplement.
+
+Si la question nécessite une explication,
+explique clairement sans être inutilement long.
 
 `,
 
-                input: conversation
+                input: [
+                    ...history,
+                    {
+                        role: "user",
+                        content: message
+                    }
+                ]
 
             });
 
 
         let reply =
-            typeof response.output_text === "string"
-                ? response.output_text.trim()
-                : "";
-
-
-        if (!reply) {
-
-            reply =
-                "Je n'ai pas réussi à générer une réponse.";
-
-        }
+            response.output_text?.trim() ||
+            "Je n'ai pas réussi à générer une réponse.";
 
 
         let action = null;
+        let url = null;
 
+
+        /* =================================================
+           ACTION
+        ================================================= */
 
         const actionMatch =
             reply.match(
-                /ACTION:(open_youtube|open_tiktok|open_messages|open_amazon|open_netflix|open_revolut)/
+                /ACTION:(open_youtube|open_tiktok|open_messages|open_amazon|open_netflix|open_revolut|open_timer|open_alarm|open_website)/
             );
 
 
@@ -273,27 +293,53 @@ des informations privées.
         }
 
 
-        /*
-         * Supprime la commande technique
-         * de la réponse affichée à l'utilisateur.
-         */
+        /* =================================================
+           URL
+        ================================================= */
+
+        const urlMatch =
+            reply.match(
+                /URL:(https?:\/\/[^\s]+)/i
+            );
+
+
+        if (urlMatch) {
+
+            url =
+                urlMatch[1];
+
+        }
+
+
+        /* =================================================
+           NETTOYAGE
+        ================================================= */
 
         reply =
             reply
+
                 .replace(
-                    /ACTION:(open_youtube|open_tiktok|open_messages|open_amazon|open_netflix|open_revolut)/g,
+                    /ACTION:(open_youtube|open_tiktok|open_messages|open_amazon|open_netflix|open_revolut|open_timer|open_alarm|open_website)/g,
                     ""
                 )
+
+                .replace(
+                    /URL:https?:\/\/[^\s]+/gi,
+                    ""
+                )
+
                 .trim();
 
 
-        return res.json({
+        res.json({
 
             success: true,
 
             reply,
 
-            action
+            action,
+
+            url
 
         });
 
@@ -306,7 +352,7 @@ des informations privées.
         );
 
 
-        return res.status(500).json({
+        res.status(500).json({
 
             success: false,
 
@@ -330,7 +376,7 @@ app.listen(
     () => {
 
         console.log(
-            `🚀 Asdrick AI V3.1 lancé sur le port ${PORT}`
+            `🚀 Asdrick AI V5 lancé sur le port ${PORT}`
         );
 
     }
